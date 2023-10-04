@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.labmedical.backend.dtos.logs.ResponseLogDTO;
 import com.labmedical.backend.entities.Log;
 import com.labmedical.backend.repositories.LogRepository;
 
@@ -18,7 +19,7 @@ public class LogService {
         this.logRepository.save(log);
     }
 
-    public List<Log> getLogs() {
-        return this.logRepository.findAllByOrderByCreatedAtDesc();
+    public List<ResponseLogDTO> getLogs() {
+        return this.logRepository.findAllByOrderByCreatedAtDesc().stream().map(ResponseLogDTO::new).toList();
     }
 }
