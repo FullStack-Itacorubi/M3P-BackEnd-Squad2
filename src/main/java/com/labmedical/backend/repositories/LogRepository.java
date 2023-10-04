@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.labmedical.backend.entities.Log;
 
 @Repository
-public interface LogRepository extends JpaRepository<Long, Log> {
+public interface LogRepository extends JpaRepository<Log, Long> {
 
 }
