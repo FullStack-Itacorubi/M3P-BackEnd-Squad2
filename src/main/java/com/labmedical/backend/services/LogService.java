@@ -1,5 +1,7 @@
 package com.labmedical.backend.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class LogService {
 
     public void saveLog(Log log) {
         this.logRepository.save(log);
+    }
+
+    public List<Log> getLogs() {
+        return this.logRepository.findAllByOrderByCreatedAtDesc();
     }
 }
