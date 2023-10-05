@@ -11,29 +11,29 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @NotBlank(message = "CEP is required")
-    String cep;
+    private String cep;
 
     @NotBlank(message = "City is required")
-    String city;
+    private String city;
 
     @NotBlank(message = "State is required")
-    String state;
+    private String state;
 
     @NotBlank(message = "Street is required")
-    String street;
+    private String street;
 
     @NotBlank(message = "Number is required")
-    String number;
+    private String number;
 
-    String complement;
+    private String complement;
 
     @NotBlank(message = "District is required")
-    String district;
+    private String district;
 
-    String reference;
+    private String reference;
 
 
 }
