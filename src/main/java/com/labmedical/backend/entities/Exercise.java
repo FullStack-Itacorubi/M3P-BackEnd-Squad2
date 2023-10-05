@@ -19,18 +19,19 @@ public class Exercise {
 
     @NotBlank(message = "Exercise name is required")
     @Size(min = 5, max = 100, message = "Exersise name must be between 05 and 100 characters")
-    @Column(name = "exercise_name")
+    @Column(name = "exercise_name",nullable = false)
     private String exerciseName;
 
     @NotNull(message = "Date is required")
-    @Column(name = "date")
+    @Column(name = "date",nullable = false)
     private LocalDate date;
 
     @NotNull(message = "Time is required")
-    @Column(name = "time")
+    @Column(name = "time",nullable = false)
     private LocalTime time;
 
     @NotNull(message = "Type is required")
+    @Column(name = "type",nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -41,7 +42,7 @@ public class Exercise {
 
     @NotBlank(message = "Exercise name is required")
     @Size(min = 10, max = 1000, message = "Exercise description must be between 10 and 1000 characters")
-    @Column(name = "description")
+    @Column(name = "description",nullable = false)
     private String description;
 
     @NotNull(message = "System Status is required")
