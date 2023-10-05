@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
