@@ -18,7 +18,8 @@ public abstract class Person {
     private Long id;
 
     @NotBlank(message = "Name is required")
-    @Size(max = 255, message = "Name cannot exceed 255 characters")
+    @Size(max = 64, message = "Name cannot exceed 64 characters")
+    @Size(min = 8, message = "Name must be at least 8 characters")
     private String name;
 
     @NotNull(message = "Gender is required")
