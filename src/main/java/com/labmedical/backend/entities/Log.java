@@ -22,5 +22,5 @@ public class Log {
     private String description;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 }
