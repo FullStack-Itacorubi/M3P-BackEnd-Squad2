@@ -12,7 +12,7 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public ResponseAddressDTO saveAddress(Address address){
-       return new ResponseAddressDTO(this.addressRepository.save(address));
+    public void saveAddress(Address address){
+       this.addressRepository.save(address);
     }
 }
