@@ -1,6 +1,5 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.dtos.address.ResponseAddressDTO;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
