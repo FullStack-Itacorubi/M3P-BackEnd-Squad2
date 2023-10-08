@@ -3,6 +3,7 @@ package com.labmedical.backend.services.Users;
 
 import com.labmedical.backend.dtos.Users.LoginRequestDTO;
 import com.labmedical.backend.dtos.Users.LoginResponseDTO;
+import com.labmedical.backend.dtos.Users.ResetPasswordRequestDTO;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,15 @@ public class UsersServiceImpl implements UsersService {
         } else {
             throw new RuntimeException("Authentication failed. Check your email and password.");
         }
+    }
+    @Override
+    public void resetPassword(ResetPasswordRequestDTO resetPasswordRequest) {
+        Users user = usersRepository.findByEmail(resetPasswordRequest.email());
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        user.setPassword(resetPasswordRequest.password());
+        usersRepository.save(user);
     }
 }
