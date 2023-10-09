@@ -6,9 +6,8 @@ import com.labmedical.backend.entities.Person;
 
 import java.time.LocalDate;
 
-public record PatientPostResponseDTO(
+public record PostRequestPatientDTO(
 
-        Long id,
 
         String name,
 
@@ -20,7 +19,7 @@ public record PatientPostResponseDTO(
 
         String email,
 
-//        Boolean status,
+        Boolean status,
 
         LocalDate dateOfBirth,
 
@@ -34,13 +33,10 @@ public record PatientPostResponseDTO(
 
         String specificCare,
 
-
         String insuranceNumber,
 
-        LocalDate insuranceValidity
+        LocalDate insuranceValidity,
 
-//        Address address,
-
-//        Boolean systemStatus
+        Address address
 ) {
 }

@@ -1,7 +1,7 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.dtos.patients.PatientPostRequestDTO;
-import com.labmedical.backend.dtos.patients.PatientPostResponseDTO;
+import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
+import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.AddressMapper;
@@ -25,15 +25,11 @@ public class PatientService {
     private AddressMapper addressMapper;
 
 
-    public PatientPostResponseDTO savePatient(PatientPostRequestDTO patient) {
-//        Address patienteAddress = this.addressService.saveAddress(patient.address());
+    public PostResponsePatientDTO savePatient(PostRequestPatientDTO patient) {
         Patient patientToSave = this.patientMapper.map(patient);
-//        patientToSave.setStatus();
-//        Long addressId = patienteAddress.getId();
-//        PatientWithAddressId patientToSaveAddressId = this.patientMapper.mapToPatienteWithAddressId(patientToSave);
-//        patientToSave.setAddress(this.addressMapper.map(this.addressService.findAddresById(patienteAddress.getId())));
-        return patientMapper
-                .mapToPatientPostResponseDTO(patientRepository.save(patientToSave));
+        patientToSave.setStatus(true);
+
+        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(patientToSave));
 
     }
 }

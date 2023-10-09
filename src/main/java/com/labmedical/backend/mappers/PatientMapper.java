@@ -1,7 +1,7 @@
 package com.labmedical.backend.mappers;
 
-import com.labmedical.backend.dtos.patients.PatientPostRequestDTO;
-import com.labmedical.backend.dtos.patients.PatientPostResponseDTO;
+import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
+import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
 import com.labmedical.backend.entities.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -9,12 +9,12 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PatientMapper {
 
-    Patient map(PatientPostRequestDTO source);
+    Patient map(PostRequestPatientDTO source);
 
-    Patient map(PatientPostResponseDTO source);
+    Patient map(PostResponsePatientDTO source);
 
-    PatientPostRequestDTO mapToPatientRequestDto(Patient source);
+    PostRequestPatientDTO mapToPostRequestPatientDTO(Patient source);
 
-    PatientPostResponseDTO mapToPatientPostResponseDTO(Patient source);
+    PostResponsePatientDTO mapToPostResponsePatientDTO(Patient source);
 
 }
