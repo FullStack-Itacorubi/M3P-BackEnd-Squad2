@@ -1,5 +1,6 @@
 package com.labmedical.backend.services;
 
+import com.labmedical.backend.dtos.address.RequestAddressDTO;
 import com.labmedical.backend.dtos.address.ResponseAddressDTO;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.mappers.AddressMapper;
@@ -18,8 +19,8 @@ public class AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
-    public Address saveAddress(Address address) {
-        return this.addressRepository.save(address);
+    public ResponseAddressDTO saveAddress(RequestAddressDTO address) {
+        return addressMapper.mapAddressToResponseDTO(this.addressRepository.save(addressMapper.map(address)));
     }
 
     public ResponseAddressDTO findAddresById(Long addressId) {

@@ -49,14 +49,10 @@ public class Patient extends Person {
     @Column(name = "insurance_validity")
     private LocalDate insuranceValidity;
 
-//    @NotNull(message = "Address is required")
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id")
-//    private Address address;
-
-//    @NotNull(message = "System Status is required")
-//    @Column(name = "system_status")
-//    private Boolean status = true;
+    @NotNull(message = "Address is required")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     public enum MaritalStatus {
         SINGLE,
