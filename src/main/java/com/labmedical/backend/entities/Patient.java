@@ -21,6 +21,7 @@ public class Patient extends Person {
 
     @NotNull(message = "Date of Birth is required")
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
 
     @Size(max = 20, message = "Maximum 20 characters allowed for RG with issuing authority")
@@ -48,14 +49,14 @@ public class Patient extends Person {
     @Column(name = "insurance_validity")
     private LocalDate insuranceValidity;
 
-    @NotNull(message = "Address is required")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+//    @NotNull(message = "Address is required")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private Address address;
 
-    @NotNull(message = "System Status is required")
-    @Column(name = "system_status")
-    private Boolean systemStatus = true;
+//    @NotNull(message = "System Status is required")
+//    @Column(name = "system_status")
+//    private Boolean status = true;
 
     public enum MaritalStatus {
         SINGLE,

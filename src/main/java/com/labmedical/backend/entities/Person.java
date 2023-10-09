@@ -37,8 +37,8 @@ public abstract class Person {
     @Email(message = "Invalid email address")
     private String email;
 
-    @NotNull(message = "Status is required")
-    private Boolean status;
+//    @NotNull(message = "Status is required")
+//    private Boolean status;
 
     public enum Gender {
         MALE,
