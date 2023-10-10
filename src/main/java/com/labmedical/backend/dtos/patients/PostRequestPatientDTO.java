@@ -31,7 +31,6 @@ public record PostRequestPatientDTO(
         @NotBlank(message = "Email is required")
         String email,
 
-        @NotNull(message = "Status is required")
         Boolean status,
 
         @NotNull(message = "Date of Birth is required")

@@ -8,7 +8,9 @@ import com.labmedical.backend.mappers.AddressMapper;
 import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,5 +44,9 @@ public class PatientService {
                 .map(patientMapper::mapToGetResponsePatientDTO)
                 .toList();
 
+    }
+
+    public GetResponsePatientDTO findPatientById(Long id) {
+        return  patientMapper.mapToGetResponsePatientDTO(patientRepository.findById(id).get());
     }
 }
