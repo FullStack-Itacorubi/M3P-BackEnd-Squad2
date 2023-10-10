@@ -22,6 +22,7 @@ public class Patient extends Person {
 
     @NotNull(message = "Date of Birth is required")
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
 
     @NotBlank(message = "RG number is required")
@@ -55,10 +56,6 @@ public class Patient extends Person {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
-
-    @NotNull(message = "System Status is required")
-    @Column(name = "system_status")
-    private Boolean systemStatus = true;
 
     public enum MaritalStatus {
         SINGLE,
