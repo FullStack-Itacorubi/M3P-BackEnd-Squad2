@@ -1,5 +1,6 @@
 package com.labmedical.backend.mappers;
 
+import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
 import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
 import com.labmedical.backend.entities.Patient;
@@ -13,8 +14,12 @@ public interface PatientMapper {
 
     Patient map(PostResponsePatientDTO source);
 
+    Patient map(GetResponsePatientDTO source);
+
     PostRequestPatientDTO mapToPostRequestPatientDTO(Patient source);
 
     PostResponsePatientDTO mapToPostResponsePatientDTO(Patient source);
+
+    GetResponsePatientDTO mapToGetResponsePatientDTO(Patient source);
 
 }

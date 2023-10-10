@@ -1,5 +1,6 @@
 package com.labmedical.backend.controllers;
 
+import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
 import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
 import com.labmedical.backend.services.PatientService;
@@ -10,11 +11,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -35,6 +35,19 @@ public class PatientController {
                     HttpStatus.BAD_REQUEST, "Invalid data", ex);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetResponsePatientDTO>> listAllPatients() {
+        try {
+            return ResponseEntity.ok(patientService.findAll());
+        } catch (ConstraintViolationException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Invalid data", ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Server error", ex);
         }
     }
 }
