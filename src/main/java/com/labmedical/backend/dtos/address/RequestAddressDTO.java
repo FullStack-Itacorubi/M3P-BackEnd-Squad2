@@ -1,7 +1,6 @@
 package com.labmedical.backend.dtos.address;
 
-public record ResponseAddressDTO(
-        Long id,
+public record RequestAddressDTO(
 
         String cep,
 
