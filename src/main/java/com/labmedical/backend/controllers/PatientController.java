@@ -33,8 +33,9 @@ public class PatientController {
         } catch (ConstraintViolationException ex) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Invalid data", ex);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Server error", ex);
         }
     }
 }
