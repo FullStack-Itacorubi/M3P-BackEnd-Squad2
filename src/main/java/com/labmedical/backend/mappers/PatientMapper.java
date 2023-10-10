@@ -3,6 +3,7 @@ package com.labmedical.backend.mappers;
 import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
 import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
+import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
 import com.labmedical.backend.entities.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -15,6 +16,8 @@ public interface PatientMapper {
     Patient map(PostResponsePatientDTO source);
 
     Patient map(GetResponsePatientDTO source);
+
+    Patient map(PutRequestPatientDTO source);
 
     PostRequestPatientDTO mapToPostRequestPatientDTO(Patient source);
 

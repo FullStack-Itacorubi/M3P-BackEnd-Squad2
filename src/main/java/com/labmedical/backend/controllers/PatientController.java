@@ -3,6 +3,7 @@ package com.labmedical.backend.controllers;
 import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
 import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
+import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
 import com.labmedical.backend.services.PatientService;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,22 @@ public class PatientController {
                     HttpStatus.BAD_REQUEST, "Invalid data", ex);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponsePatientDTO> updatePatient(
+            @PathVariable Long id,
+            @Validated @RequestBody PutRequestPatientDTO patient
+    ) {
+        try {
+            return new ResponseEntity<>(patientService.replacePatientData(id, patient), HttpStatus.OK);
+        } catch (ConstraintViolationException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Invalid data", ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+
         }
     }
 }
