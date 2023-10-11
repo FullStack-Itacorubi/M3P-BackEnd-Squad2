@@ -62,7 +62,7 @@ public class Diet {
     @PrePersist
     @PreUpdate
     private void validateEnumValues() {
-        if (type != null && !EnumUtils.isValidEnum(Diet.DietType.class, type.name())) {
+        if (type != null && !EnumUtils.isValidEnum(Medication.MedicationType.class, type.name())) {
             throw new IllegalArgumentException("Invalid Diet Type");
         }
     }
