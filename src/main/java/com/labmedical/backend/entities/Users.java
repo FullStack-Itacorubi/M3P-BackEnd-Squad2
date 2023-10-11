@@ -1,4 +1,5 @@
 package com.labmedical.backend.entities;
+import com.labmedical.backend.entities.enums.UserType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class Users extends Person {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotNull(message = "Type is required")
+    @NotNull(message = "System Status is required")
     @Enumerated(EnumType.STRING)
     private UserType type;
 
@@ -28,10 +29,5 @@ public class Users extends Person {
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
-    public enum UserType {
-        DOCTOR,
-        ADMINISTRATOR,
-        NURSE
-    }
 }
 
