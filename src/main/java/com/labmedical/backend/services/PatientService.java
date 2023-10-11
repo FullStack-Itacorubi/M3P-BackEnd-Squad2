@@ -9,7 +9,9 @@ import com.labmedical.backend.mappers.AddressMapper;
 import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -52,11 +54,20 @@ public class PatientService {
 
     public PostResponsePatientDTO replacePatientData(Long id, PutRequestPatientDTO patient) {
 
-        Patient patientToUpdate = patientMapper.map(findPatientById(id));
+        patientMapper.map(findPatientById(id));
         Patient newDataPatient = patientMapper.map(patient);
         newDataPatient.setId(id);
 
 
         return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(newDataPatient));
     }
+
+    public void deletePatient(Long id) {
+//TODO : exception to not dlete patient with exercise, diet, exam or appointment"
+        Patient patientToDelete = patientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        patientRepository.delete(patientToDelete);
+    }
 }
+

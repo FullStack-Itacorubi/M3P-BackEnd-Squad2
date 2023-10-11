@@ -80,4 +80,17 @@ public class PatientController {
 
         }
     }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping("/{id}")
+    public void deletePatient(@PathVariable Long id) {
+        try {
+            patientService.deletePatient(id);
+        } catch (ResponseStatusException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found", ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient cannot be deleted", ex);
+        }
+    }
+
 }
