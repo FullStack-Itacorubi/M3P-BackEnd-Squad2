@@ -23,7 +23,6 @@ public abstract class Person {
     private String name;
 
     @NotNull(message = "Gender is required")
-    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @NotBlank(message = "CPF is required")
