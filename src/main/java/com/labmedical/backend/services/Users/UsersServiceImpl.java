@@ -7,6 +7,7 @@ import com.labmedical.backend.dtos.Users.ResetPasswordRequestDTO;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,5 +39,15 @@ public class UsersServiceImpl implements UsersService {
         }
         user.setPassword(resetPasswordRequest.password());
         usersRepository.save(user);
+    }
+    @Override
+    public Long createUser(Users user) {
+        if (usersRepository.existsByCpfOrEmail(user.getCpf(), user.getEmail())) {
+            throw new DataIntegrityViolationException("CPF or email already exists.");
+        }
+
+        Users savedUser = usersRepository.save(user);
+
+        return savedUser.getId();
     }
 }
