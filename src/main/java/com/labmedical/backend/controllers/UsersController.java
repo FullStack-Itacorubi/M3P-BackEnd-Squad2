@@ -1,12 +1,10 @@
 package com.labmedical.backend.controllers;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.labmedical.backend.dtos.Users.CreateUsersRequestDTO;
-import com.labmedical.backend.dtos.Users.LoginRequestDTO;
-import com.labmedical.backend.dtos.Users.LoginResponseDTO;
-import com.labmedical.backend.dtos.Users.ResetPasswordRequestDTO;
+import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
+import com.labmedical.backend.repositories.UsersRepository;
 import com.labmedical.backend.services.Users.UsersServiceImpl;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ public class UsersController {
 
     @Autowired
     private UsersServiceImpl usersService;
+    @Autowired
+    private UsersRepository usersRepository;
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Validated @RequestBody LoginRequestDTO loginRequest) {
@@ -59,7 +59,22 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUser(
+            @PathVariable Long id,
+            @Validated @RequestBody UpdateUsersRequestDTO updateUserRequest) {
+        try {
+            Users existingUser = usersRepository.getUserById(id);
 
+            if (existingUser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+            usersService.updateUser(existingUser, updateUserRequest);
+            return ResponseEntity.ok(usersRepository.getUserById(existingUser.getId()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
