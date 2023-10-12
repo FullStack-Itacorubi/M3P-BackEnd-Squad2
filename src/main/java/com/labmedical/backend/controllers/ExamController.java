@@ -2,13 +2,9 @@ package com.labmedical.backend.controllers;
 
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
-import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.mappers.ExamMapper;
-import com.labmedical.backend.services.ExamService;
 import com.labmedical.backend.services.ExamServiceImpl;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,13 +26,22 @@ public class ExamController {
 
     @Autowired
     private ExamMapper examMapper;
+
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createUser(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
         try {
             return new ResponseEntity<>(examService.createExam(postRequestExamDTO), HttpStatus.CREATED);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponseExamDTO> updateExam(
+            @PathVariable Long id,
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+        return ResponseEntity.ok(examService.updateExam(id, postRequestExamDTO));
+
     }
 
 
@@ -60,6 +66,15 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+    }
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
+        Throwable errorCause = ex.getCause();
+        if (errorCause != null) {
+            String errorMessage = errorCause.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found at the database");
     }
 
 }

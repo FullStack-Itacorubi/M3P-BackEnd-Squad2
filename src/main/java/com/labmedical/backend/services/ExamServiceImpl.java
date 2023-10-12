@@ -7,6 +7,7 @@ import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.repositories.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ExamServiceImpl implements ExamService{
@@ -24,5 +25,15 @@ public class ExamServiceImpl implements ExamService{
         return examMapper
                 .mapExamToPostResponseExamDTO(examRepository.save(examToSave));
 
+    }
+
+    @Override
+    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO) {
+        Exam examToUpdate = examRepository.findById(id).get();
+
+        Exam examUpdated = examMapper.map(postRequestExamDTO);
+        examUpdated.setId(id);
+
+        return examMapper.mapExamToPostResponseExamDTO(examRepository.save(examUpdated));
     }
 }

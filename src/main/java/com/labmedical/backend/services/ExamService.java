@@ -9,4 +9,6 @@ public interface ExamService {
 
     PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO);
 
+    PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO);
+
 }
