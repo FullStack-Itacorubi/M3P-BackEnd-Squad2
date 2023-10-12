@@ -37,7 +37,7 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
-    @PostMapping("/resetarsenha")
+    @PatchMapping ("/res")
     public ResponseEntity<Object> resetPassword(@Validated @RequestBody ResetPasswordRequestDTO resetPasswordRequest) {
         try {
             usersService.resetPassword(resetPasswordRequest);

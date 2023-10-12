@@ -1,7 +1,6 @@
 package com.labmedical.backend.dtos.Users;
 
 import com.labmedical.backend.entities.Person;
-import com.labmedical.backend.annotations.ValidUserType;
 import com.labmedical.backend.entities.enums.UserType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
