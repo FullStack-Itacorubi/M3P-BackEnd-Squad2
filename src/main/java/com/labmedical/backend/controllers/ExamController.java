@@ -2,13 +2,9 @@ package com.labmedical.backend.controllers;
 
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
-import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.mappers.ExamMapper;
-import com.labmedical.backend.services.ExamService;
 import com.labmedical.backend.services.ExamServiceImpl;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/exames")
@@ -29,8 +25,9 @@ public class ExamController {
 
     @Autowired
     private ExamMapper examMapper;
+
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createUser(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
         try {
             return new ResponseEntity<>(examService.createExam(postRequestExamDTO), HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -38,9 +35,13 @@ public class ExamController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponseExamDTO> updateExam(
+            @PathVariable Long id,
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+        return ResponseEntity.ok(examService.updateExam(id, postRequestExamDTO));
 
-
-
+    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -49,17 +50,26 @@ public class ExamController {
                 .getFieldErrors()
                 .stream()
                 .map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage())
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
     }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         Throwable mostSpecificCause = ex.getMostSpecificCause();
-        if (mostSpecificCause != null) {
-            String errorMessage = mostSpecificCause.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+
+        String errorMessage = mostSpecificCause.getMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
+        Throwable errorCause = ex.getCause();
+        if (errorCause != null) {
+            String errorMessage = errorCause.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found at the database");
     }
 
 }
