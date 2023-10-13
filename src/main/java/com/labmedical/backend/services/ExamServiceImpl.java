@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ExamServiceImpl implements ExamService {
@@ -30,8 +31,9 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO){
-        if (examRepository.findById(id).isEmpty()) {
+    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO) {
+        Optional<Exam> examOptional = examRepository.findById(id);
+        if (examOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
 
