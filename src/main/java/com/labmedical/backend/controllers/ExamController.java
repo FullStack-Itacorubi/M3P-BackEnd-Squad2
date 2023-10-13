@@ -1,10 +1,12 @@
 package com.labmedical.backend.controllers;
 
+import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.services.ExamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -39,8 +41,13 @@ public class ExamController {
     public ResponseEntity<PostResponseExamDTO> updateExam(
             @PathVariable Long id,
             @Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
-        return ResponseEntity.ok(examService.updateExam(id, postRequestExamDTO));
+        return new ResponseEntity<>(examService.updateExam(id, postRequestExamDTO), HttpStatus.OK);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetResponseExamDTO> getExamById(@PathVariable Long id){
+            return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
 
