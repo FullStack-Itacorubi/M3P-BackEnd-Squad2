@@ -34,7 +34,8 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO) {
-        if (examRepository.findById(id).isEmpty()) {
+        Optional<Exam> examOptional = examRepository.findById(id);
+        if (examOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
 
