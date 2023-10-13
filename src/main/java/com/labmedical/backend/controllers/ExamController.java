@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/exames")
@@ -45,28 +44,24 @@ public class ExamController {
     }
 
 
-
-
-
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errorMessages = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage())
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
     }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         Throwable mostSpecificCause = ex.getMostSpecificCause();
-        if (mostSpecificCause != null) {
-            String errorMessage = mostSpecificCause.getMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+
+        String errorMessage = mostSpecificCause.getMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
         Throwable errorCause = ex.getCause();
