@@ -1,13 +1,12 @@
 package com.labmedical.backend.controllers;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
 import com.labmedical.backend.repositories.UsersRepository;
 import com.labmedical.backend.services.Users.UsersServiceImpl;
-import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +74,27 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
+    @GetMapping
+    public ResponseEntity<Object> getAllUsers() {
+        try {
+            List<Users> users = usersRepository.findAll();
+            List<CreateUsersResponseDTO> userDTOs = users.stream()
+                    .map(UsersMapper.INSTANCE::userToCreateUserResponseDTO)
+                    .collect(Collectors.toList());
+            if (userDTOs.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found.");
+            }
+            return ResponseEntity.ok(userDTOs);
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
+        }
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
