@@ -1,15 +1,18 @@
 package com.labmedical.backend.services;
 
+import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.repositories.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ExamServiceImpl implements ExamService {
@@ -30,7 +33,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO){
+    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO) {
         if (examRepository.findById(id).isEmpty()) {
             throw new NoSuchElementException();
         }
@@ -39,5 +42,15 @@ public class ExamServiceImpl implements ExamService {
         examToUpdate.setId(id);
 
         return examMapper.mapExamToPostResponseExamDTO(examRepository.save(examToUpdate));
+    }
+
+    @Override
+    public GetResponseExamDTO findExamById(Long id) {
+        Optional<Exam> examOptional = examRepository.findById(id);
+        if (examOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return examMapper.mapExamToGetResponseExamDTO(examOptional.get());
+
     }
 }
