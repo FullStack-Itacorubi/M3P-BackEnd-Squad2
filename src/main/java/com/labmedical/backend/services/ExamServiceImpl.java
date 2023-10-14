@@ -54,4 +54,14 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.mapExamToGetResponseExamDTO(examOptional.get());
 
     }
+
+    @Override
+    public void deleteExamById(Long id) {
+        Optional<Exam> examOptional = examRepository.findById(id);
+        if (examOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }else{
+            examRepository.delete(examOptional.get());
+        }
+    }
 }

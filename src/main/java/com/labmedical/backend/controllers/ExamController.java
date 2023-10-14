@@ -50,6 +50,14 @@ public class ExamController {
             return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteExamById(@PathVariable Long id){
+
+            examService.deleteExamById(id);
+
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {

@@ -11,4 +11,6 @@ public interface ExamService {
     PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO);
 
     GetResponseExamDTO findExamById(Long id);
+
+    void deleteExamById(Long id);
 }
