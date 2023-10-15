@@ -1,7 +1,6 @@
 package com.labmedical.backend.dtos.exercises;
 
 import com.labmedical.backend.entities.Exercise;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,7 +9,7 @@ import org.hibernate.validator.constraints.Range;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record PostRequestExerciseDTO(
+public record RequestExerciseDTO(
 
         @NotBlank(message = "Exercise name is required")
         @Size(min = 5, max = 100, message = "Exersise name must be between 05 and 100 characters")
