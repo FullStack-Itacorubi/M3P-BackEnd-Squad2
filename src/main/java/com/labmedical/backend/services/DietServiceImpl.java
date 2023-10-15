@@ -21,7 +21,7 @@ public class DietServiceImpl implements DietService {
     @Autowired
     private DietMapper dietMapper;
 
-    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO){
+    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO) {
         Diet dietToSave = dietMapper.map(postRequestDietDTO);
         return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToSave));
     }
@@ -40,11 +40,21 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public GetResponseDietDTO findExamById(Long id) {
-        Optional<Diet> examOptional = dietRepository.findById(id);
-        if (examOptional.isEmpty()) {
+    public GetResponseDietDTO findDietById(Long id) {
+        Optional<Diet> dietOptional = dietRepository.findById(id);
+        if (dietOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return dietMapper.mapToGetResponseDietDTO(examOptional.get());
+        return dietMapper.mapToGetResponseDietDTO(dietOptional.get());
+    }
+
+    @Override
+    public void deleteDietById(Long id) {
+        Optional<Diet> dietOptional = dietRepository.findById(id);
+        if (dietOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            dietRepository.delete(dietOptional.get());
+        }
     }
 }

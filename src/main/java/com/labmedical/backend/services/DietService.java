@@ -10,5 +10,7 @@ public interface DietService {
 
     PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO);
 
-    GetResponseDietDTO findExamById(Long id);
+    GetResponseDietDTO findDietById(Long id);
+
+    void deleteDietById(Long id);
 }

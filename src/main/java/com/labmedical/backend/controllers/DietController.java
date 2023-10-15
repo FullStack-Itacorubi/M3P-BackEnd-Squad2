@@ -38,7 +38,7 @@ public class DietController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDietDTO> updateExam(
+    public ResponseEntity<PostResponseDietDTO> updateDiet(
             @PathVariable Long id,
             @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
         return new ResponseEntity<>(dietService.updateDiet(id, postRequestDietDTO), HttpStatus.OK);
@@ -46,11 +46,17 @@ public class DietController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetResponseDietDTO> getExamById(@PathVariable Long id){
-        return new ResponseEntity<>(dietService.findExamById(id), HttpStatus.OK);
+    public ResponseEntity<GetResponseDietDTO> getDietById(@PathVariable Long id){
+        return new ResponseEntity<>(dietService.findDietById(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteDietById(@PathVariable Long id){
 
+        dietService.deleteDietById(id);
+
+    }
 
 
 
@@ -79,7 +85,7 @@ public class DietController {
             String errorMessage = errorCause.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found at the database");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diet not found at the database");
     }
 
 }
