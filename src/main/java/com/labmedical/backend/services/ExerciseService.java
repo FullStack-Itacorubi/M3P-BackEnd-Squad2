@@ -1,12 +1,9 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.repositories.ExerciseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.labmedical.backend.dtos.exercises.PostRequestExerciseDTO;
+import com.labmedical.backend.dtos.exercises.PostResponseExerciseDTO;
 
-@Service
-public class ExerciseService {
+public interface ExerciseService {
 
-    @Autowired
-    private ExerciseRepository exerciseRepository;
+    PostResponseExerciseDTO createExercise(PostRequestExerciseDTO postRequestExerciseDTO);
 }
