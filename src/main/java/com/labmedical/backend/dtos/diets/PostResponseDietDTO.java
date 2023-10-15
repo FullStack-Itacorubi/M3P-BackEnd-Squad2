@@ -1,4 +1,4 @@
-package com.labmedical.backend.dtos.logs;
+package com.labmedical.backend.dtos.diets;
 
 import com.labmedical.backend.entities.Diet;
 import jakarta.validation.constraints.NotBlank;
