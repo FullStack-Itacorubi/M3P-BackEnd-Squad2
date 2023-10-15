@@ -9,4 +9,6 @@ import org.springframework.stereotype.Service;
 public interface DietService {
 
     PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO);
+
+    PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO);
 }

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class DietServiceImpl implements DietService {
 
@@ -21,5 +24,18 @@ public class DietServiceImpl implements DietService {
     public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO){
         Diet dietToSave = dietMapper.map(postRequestDietDTO);
         return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToSave));
+    }
+
+    @Override
+    public PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO) {
+        Optional<Diet> dietOptional = dietRepository.findById(id);
+        if (dietOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Diet dietToUpdate = dietMapper.map(postRequestDietDTO);
+        dietToUpdate.setId(id);
+
+        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToUpdate));
     }
 }

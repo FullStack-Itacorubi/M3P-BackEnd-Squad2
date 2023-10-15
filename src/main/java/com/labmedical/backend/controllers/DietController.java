@@ -36,6 +36,14 @@ public class DietController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponseDietDTO> updateExam(
+            @PathVariable Long id,
+            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
+        return new ResponseEntity<>(dietService.updateDiet(id, postRequestDietDTO), HttpStatus.OK);
+
+    }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
