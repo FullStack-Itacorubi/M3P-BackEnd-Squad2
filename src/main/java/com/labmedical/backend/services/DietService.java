@@ -1,12 +1,12 @@
 package com.labmedical.backend.services;
 
+import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
+import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
 import com.labmedical.backend.repositories.DietRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class DietService {
+public interface DietService {
 
-    @Autowired
-    private DietRepository dietRepository;
+    PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO);
 }
