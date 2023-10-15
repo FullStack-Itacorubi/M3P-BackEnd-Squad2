@@ -44,6 +44,11 @@ public class ExerciseController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id){
+        return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
