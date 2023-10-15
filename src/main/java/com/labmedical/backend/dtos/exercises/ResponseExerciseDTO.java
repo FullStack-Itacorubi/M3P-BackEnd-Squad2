@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Range;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record PostResponseExerciseDTO(
+public record ResponseExerciseDTO(
 
         Long id,
 
