@@ -48,4 +48,14 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         return exerciseMapper.mapToPostResponseExerciseDTO(exerciseOptional.get());
     }
+
+    @Override
+    public void deleteExerciseById(Long id) {
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(id);
+        if (exerciseOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }else{
+            exerciseRepository.delete(exerciseOptional.get());
+        }
+    }
 }

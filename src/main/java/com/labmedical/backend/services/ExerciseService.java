@@ -10,4 +10,6 @@ public interface ExerciseService {
     ResponseExerciseDTO updateExercise(Long id, RequestExerciseDTO requestExerciseDTO);
 
     ResponseExerciseDTO findExerciseById(Long id);
+
+    void deleteExerciseById(Long id);
 }

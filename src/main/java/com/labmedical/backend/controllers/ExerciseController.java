@@ -49,6 +49,14 @@ public class ExerciseController {
         return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteExerciseById(@PathVariable Long id){
+
+        exerciseService.deleteExerciseById(id);
+
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
