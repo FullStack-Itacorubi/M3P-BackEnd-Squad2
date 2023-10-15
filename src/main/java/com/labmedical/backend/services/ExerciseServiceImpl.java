@@ -39,4 +39,13 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         return exerciseMapper.mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
     }
+
+    @Override
+    public ResponseExerciseDTO findExerciseById(Long id) {
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(id);
+        if (exerciseOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return exerciseMapper.mapToPostResponseExerciseDTO(exerciseOptional.get());
+    }
 }

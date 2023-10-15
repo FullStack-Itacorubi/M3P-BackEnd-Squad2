@@ -8,4 +8,6 @@ public interface ExerciseService {
     ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO);
 
     ResponseExerciseDTO updateExercise(Long id, RequestExerciseDTO requestExerciseDTO);
+
+    ResponseExerciseDTO findExerciseById(Long id);
 }
