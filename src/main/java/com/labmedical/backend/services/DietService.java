@@ -1,14 +1,14 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
-import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
-import com.labmedical.backend.repositories.DietRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
+import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
+import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 
 public interface DietService {
 
     PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO);
 
     PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO);
+
+    GetResponseDietDTO findExamById(Long id);
 }

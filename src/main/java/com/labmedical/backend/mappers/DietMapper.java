@@ -1,6 +1,7 @@
 package com.labmedical.backend.mappers;
-import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
-import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
+import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
+import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
+import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,6 +13,11 @@ public interface DietMapper {
 
     Diet map(PostResponseDietDTO source);
 
+    Diet map(GetResponseDietDTO source);
+
     PostRequestDietDTO mapToPostRequestDietDTO(Diet source);
+
     PostResponseDietDTO mapToPostResponseDietDTO(Diet source);
+
+    GetResponseDietDTO mapToGetResponseDietDTO(Diet source);
 }

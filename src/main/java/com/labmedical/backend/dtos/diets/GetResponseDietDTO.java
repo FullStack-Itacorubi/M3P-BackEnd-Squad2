@@ -1,4 +1,4 @@
-package com.labmedical.backend.dtos.logs;
+package com.labmedical.backend.dtos.diets;
 
 import com.labmedical.backend.entities.Diet;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +8,9 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record PostRequestDietDTO(
+public record GetResponseDietDTO(
+
+        Long id,
         @NotBlank(message = "Diet Name is required")
         String dietName,
 
