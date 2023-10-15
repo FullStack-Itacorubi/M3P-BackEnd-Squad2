@@ -1,16 +1,24 @@
 package com.labmedical.backend.services;
 
+<<<<<<< HEAD
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
+=======
+import com.labmedical.backend.dtos.exercises.PostRequestExerciseDTO;
+import com.labmedical.backend.dtos.exercises.PostResponseExerciseDTO;
+>>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 import com.labmedical.backend.entities.Exercise;
 import com.labmedical.backend.mappers.ExerciseMapper;
 import com.labmedical.backend.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+=======
+>>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
 
@@ -21,6 +29,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseMapper exerciseMapper;
 
     @Override
+<<<<<<< HEAD
     public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
         Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
         return exerciseMapper
@@ -58,4 +67,11 @@ public class ExerciseServiceImpl implements ExerciseService {
             exerciseRepository.delete(exerciseOptional.get());
         }
     }
+=======
+    public PostResponseExerciseDTO createExercise(PostRequestExerciseDTO postRequestExerciseDTO) {
+        Exercise exerciseToSave = exerciseMapper.map(postRequestExerciseDTO);
+        return exerciseMapper
+                .mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
+    }
+>>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 }
