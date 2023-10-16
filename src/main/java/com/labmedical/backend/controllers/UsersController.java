@@ -1,12 +1,11 @@
 package com.labmedical.backend.controllers;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.labmedical.backend.dtos.Users.UpdateUsersRequestDTO;
 import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
 import com.labmedical.backend.repositories.UsersRepository;
 import com.labmedical.backend.services.Users.UsersServiceImpl;
-import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
