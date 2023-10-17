@@ -24,19 +24,15 @@ public class ExamServiceImpl implements ExamService {
     private ExamMapper examMapper;
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientServiceImpl patientService;
 
 
     @Override
     public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId) {
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
-        if (patientOptional.isEmpty()) {
-            throw new NoSuchElementException();
-        }
+        Patient patient = patientService.findPatientById(patientId);
 
-        Exam examToSave = new Exam();
-        examToSave = examMapper.map(postRequestExamDTO);
-        examToSave.setPatient(patientOptional.get());
+        Exam examToSave = examMapper.map(postRequestExamDTO);
+        examToSave.setPatient(patient);
         
         return examMapper
                 .mapExamToPostResponseExamDTO(examRepository.save(examToSave));
