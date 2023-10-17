@@ -1,5 +1,6 @@
 package com.labmedical.backend.dtos.exams;
 
+import com.labmedical.backend.entities.Patient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -38,7 +39,7 @@ public record PostResponseExamDTO(
         String results,
 
         @NotNull
-        Long patientId,
+        Patient patient,
 
         @NotNull(message = "is required")
         Boolean systemStatus

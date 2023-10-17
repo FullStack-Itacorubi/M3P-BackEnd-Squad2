@@ -30,7 +30,10 @@ public class ExamController {
     private ExamMapper examMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO, @RequestParam Long patientId) {
+    public ResponseEntity<PostResponseExamDTO> createExam(
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO,
+            @RequestParam Long patientId
+    ) {
         try {
             return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -48,14 +51,14 @@ public class ExamController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetResponseExamDTO> getExamById(@PathVariable Long id){
-            return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
+        return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteExamById(@PathVariable Long id){
 
-            examService.deleteExamById(id);
+        examService.deleteExamById(id);
 
     }
 
