@@ -4,8 +4,10 @@ import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.entities.Exam;
+import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.repositories.ExamRepository;
+import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +23,21 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamMapper examMapper;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
 
     @Override
-    public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO) {
-        Exam examToSave = examMapper.map(postRequestExamDTO);
+    public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId) {
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+        if (patientOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Exam examToSave = new Exam();
+        examToSave = examMapper.map(postRequestExamDTO);
+        examToSave.setPatient(patientOptional.get());
+        
         return examMapper
                 .mapExamToPostResponseExamDTO(examRepository.save(examToSave));
 

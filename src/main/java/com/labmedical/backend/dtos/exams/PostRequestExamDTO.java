@@ -1,5 +1,6 @@
 package com.labmedical.backend.dtos.exams;
 
+import com.labmedical.backend.entities.Patient;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +36,11 @@ public record PostRequestExamDTO(
         @Size(min = 16, max = 1024, message = "must be between 16 and 1024 characters")
         String results,
 
+        @NotNull
+        Patient patient,
+
         @NotNull(message = "is required")
         Boolean systemStatus
+
 ) {
 }

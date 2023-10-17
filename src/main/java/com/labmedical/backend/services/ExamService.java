@@ -6,7 +6,7 @@ import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 
 public interface ExamService {
 
-    PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO);
+    PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId);
 
     PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO);
 

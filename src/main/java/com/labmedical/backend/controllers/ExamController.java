@@ -5,6 +5,7 @@ import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.services.ExamServiceImpl;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,9 @@ public class ExamController {
     private ExamMapper examMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO, @RequestParam Long patientId) {
         try {
-            return new ResponseEntity<>(examService.createExam(postRequestExamDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
         }

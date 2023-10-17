@@ -53,5 +53,9 @@ public class Exam {
     @Column(name = "system_status")
     private Boolean systemStatus;
 
+    @NotNull(message = "Patient is required")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
 }
