@@ -30,7 +30,10 @@ public class ExamController {
     private ExamMapper examMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createExam(@Validated @RequestBody PostRequestExamDTO postRequestExamDTO, @RequestParam Long patientId) {
+    public ResponseEntity<PostResponseExamDTO> createExam(
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO,
+            @RequestParam Long patientId
+    ) {
         try {
             return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
         } catch (Exception ex) {

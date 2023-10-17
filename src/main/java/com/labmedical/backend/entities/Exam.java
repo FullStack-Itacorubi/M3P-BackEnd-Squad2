@@ -54,7 +54,7 @@ public class Exam {
     private Boolean systemStatus;
 
     @NotNull(message = "Patient is required")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 

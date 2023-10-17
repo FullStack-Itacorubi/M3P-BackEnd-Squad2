@@ -6,6 +6,7 @@ import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExamMapper;
+import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.ExamRepository;
 import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,21 @@ public class ExamServiceImpl implements ExamService {
     private ExamMapper examMapper;
 
     @Autowired
-    private PatientServiceImpl patientService;
+    private PatientRepository patientRepository;
+//    PatientServiceImpl patientService;
+
+    @Autowired
+    private PatientMapper patientMapper;
 
 
     @Override
     public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId) {
-        Patient patient = patientService.findPatientById(patientId);
-
+        Optional<Patient> patientOptional = patientRepository.findById(patientId) ;
+        if(patientOptional.isEmpty()){
+            throw new NoSuchElementException();
+        }
         Exam examToSave = examMapper.map(postRequestExamDTO);
-        examToSave.setPatient(patient);
+        examToSave.setPatient(patientOptional.get());
         
         return examMapper
                 .mapExamToPostResponseExamDTO(examRepository.save(examToSave));
