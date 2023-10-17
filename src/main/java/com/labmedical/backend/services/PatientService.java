@@ -1,35 +1,23 @@
 package com.labmedical.backend.services;
 
+import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
 import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
-import com.labmedical.backend.entities.Address;
-import com.labmedical.backend.entities.Patient;
-import com.labmedical.backend.mappers.AddressMapper;
-import com.labmedical.backend.mappers.PatientMapper;
-import com.labmedical.backend.repositories.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
 
-@Service
-public class PatientService {
+import java.util.List;
 
-    @Autowired
-    private PatientRepository patientRepository;
+public interface PatientService {
 
-    @Autowired AddressService addressService;
+    PostResponsePatientDTO savePatient(PostRequestPatientDTO patient);
 
-    @Autowired
-    private PatientMapper patientMapper;
+    List<GetResponsePatientDTO> findAll();
 
-    @Autowired
-    private AddressMapper addressMapper;
+    GetResponsePatientDTO findPatientById(Long id);
 
 
-    public PostResponsePatientDTO savePatient(PostRequestPatientDTO patient) {
-        Patient patientToSave = this.patientMapper.map(patient);
-        patientToSave.setStatus(true);
+    PostResponsePatientDTO replacePatientData(Long id, PutRequestPatientDTO patient);
 
-        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(patientToSave));
-
-    }
+    void deletePatient(Long id);
 }
+
