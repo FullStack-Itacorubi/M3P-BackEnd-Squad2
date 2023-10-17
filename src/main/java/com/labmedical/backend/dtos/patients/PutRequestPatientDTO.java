@@ -8,41 +8,43 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.NonNull;
 
 import java.time.LocalDate;
 
-public record PostRequestPatientDTO(
+public record PutRequestPatientDTO(
 
-        @NotBlank(message = "is required")
+        Long id,
+
+        @NotBlank(message = "Name is required")
         String name,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Gender is required")
         Person.Gender gender,
 
-        @NotBlank(message = "is required")
+        @NotBlank(message = "CPF is required")
         String cpf,
 
         @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid phone number format (e.g., (XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
-        @NotBlank(message = "number is required")
+        @NotBlank(message = "Phone number is required")
         String phone,
 
         @Email(message = "Invalid email address")
-        @NotBlank(message = "is required")
+        @NotBlank(message = "Email is required")
         String email,
 
+        @NotNull(message = "Patient system status is required")
         Boolean status,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Date of Birth is required")
         LocalDate dateOfBirth,
 
-        @NotBlank(message = "is required")
+        @NotBlank(message = "RG is required")
         String rgWithIssuingAuthority,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Marital Status is required")
         Patient.MaritalStatus maritalStatus,
 
-        @NotBlank(message = "number is required")
+        @NotBlank(message = "Emergency contact number is required")
         String emergencyContact,
 
         String allergies,
@@ -58,7 +60,7 @@ public record PostRequestPatientDTO(
         @Column(name = "insurance_validity")
         LocalDate insuranceValidity,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Address is required")
         Address address
 ) {
 }
