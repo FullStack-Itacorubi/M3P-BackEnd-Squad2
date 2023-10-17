@@ -14,35 +14,35 @@ import java.time.LocalDate;
 
 public record PostRequestPatientDTO(
 
-        @NotBlank(message = "Name is required")
+        @NotBlank(message = "is required")
         String name,
 
-        @NotNull(message = "Gender is required")
+        @NotNull(message = "is required")
         Person.Gender gender,
 
-        @NotBlank(message = "CPF is required")
+        @NotBlank(message = "is required")
         String cpf,
 
         @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid phone number format (e.g., (XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
-        @NotBlank(message = "Phone number is required")
+        @NotBlank(message = "number is required")
         String phone,
 
         @Email(message = "Invalid email address")
-        @NotBlank(message = "Email is required")
+        @NotBlank(message = "is required")
         String email,
 
         Boolean status,
 
-        @NotNull(message = "Date of Birth is required")
+        @NotNull(message = "is required")
         LocalDate dateOfBirth,
 
-        @NotBlank(message = "RG is required")
+        @NotBlank(message = "is required")
         String rgWithIssuingAuthority,
 
-        @NotNull(message = "Marital Status is required")
+        @NotNull(message = "is required")
         Patient.MaritalStatus maritalStatus,
 
-        @NotBlank(message = "Emergency contact number is required")
+        @NotBlank(message = "number is required")
         String emergencyContact,
 
         String allergies,
@@ -58,7 +58,7 @@ public record PostRequestPatientDTO(
         @Column(name = "insurance_validity")
         LocalDate insuranceValidity,
 
-        @NotNull(message = "Address is required")
+        @NotNull(message = "is required")
         Address address
 ) {
 }
