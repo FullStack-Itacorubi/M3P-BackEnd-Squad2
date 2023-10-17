@@ -1,5 +1,7 @@
 package com.labmedical.backend.controllers;
 
+
+import com.labmedical.backend.dtos.Users.UpdateUsersRequestDTO;
 import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
