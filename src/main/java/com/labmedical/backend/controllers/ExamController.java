@@ -51,14 +51,14 @@ public class ExamController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetResponseExamDTO> getExamById(@PathVariable Long id){
-            return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
+        return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteExamById(@PathVariable Long id){
 
-            examService.deleteExamById(id);
+        examService.deleteExamById(id);
 
     }
 

@@ -36,6 +36,7 @@ public record PostRequestExamDTO(
         @Size(min = 16, max = 1024, message = "must be between 16 and 1024 characters")
         String results,
 
+
         @NotNull(message = "is required")
         Boolean systemStatus
 
