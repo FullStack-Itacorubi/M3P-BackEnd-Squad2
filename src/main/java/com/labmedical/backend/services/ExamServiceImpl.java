@@ -34,7 +34,7 @@ public class ExamServiceImpl implements ExamService {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
         if(patientOptional.isEmpty()){
-            throw new NoSuchElementException();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
         Exam examToSave = examMapper.map(postRequestExamDTO);
         examToSave.setPatient(patientOptional.get());
