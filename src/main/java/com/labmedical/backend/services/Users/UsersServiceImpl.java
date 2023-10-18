@@ -40,10 +40,10 @@ public class UsersServiceImpl implements UsersService {
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
-        if (resetPasswordRequest.password() != user.getPassword()) {
+        if (!resetPasswordRequest.oldPassword().equals(user.getPassword())) {
             throw new IllegalArgumentException("Passwords do not match");
         }
-        user.setPassword(resetPasswordRequest.password());
+        user.setPassword(resetPasswordRequest.newPassword());
         usersRepository.save(user);
     }
 

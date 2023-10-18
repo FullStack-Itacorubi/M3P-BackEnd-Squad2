@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 public record ResetPasswordRequestDTO(
         @NotNull Long id,
         @NotBlank(message = "Email is required") @Email(message = "Invalid email address") String email,
-        @NotBlank(message = "Password is required") String password)
+        @NotBlank(message = "Password is required") String oldPassword,
+        @NotBlank(message = "Please provide a new password") String newPassword)
  {
 }
