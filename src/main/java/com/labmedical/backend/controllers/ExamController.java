@@ -34,11 +34,9 @@ public class ExamController {
             @Validated @RequestBody PostRequestExamDTO postRequestExamDTO,
             @RequestParam Long patientId
     ) {
-        try {
-            return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
-        }
+
+        return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
+
     }
 
     @PutMapping("/{id}")
@@ -87,6 +85,15 @@ public class ExamController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Object> handleNoSuchElementException(ResponseStatusException ex) {
+        Throwable errorCause = ex.getCause();
+        if (errorCause != null) {
+            String errorMessage = errorCause.getMessage();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found at the database");
+    }
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
         Throwable errorCause = ex.getCause();
