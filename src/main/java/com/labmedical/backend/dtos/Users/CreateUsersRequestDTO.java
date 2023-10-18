@@ -1,5 +1,8 @@
 package com.labmedical.backend.dtos.Users;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.labmedical.backend.dtos.annotations.UserTypeDeserializer;
+import com.labmedical.backend.dtos.annotations.ValidUserType;
 import com.labmedical.backend.entities.Person;
 import com.labmedical.backend.entities.enums.UserType;
 import jakarta.persistence.EnumType;
@@ -22,6 +25,9 @@ public record CreateUsersRequestDTO(
         String email,
         @NotBlank
         String password,
+
+        @JsonDeserialize(using = UserTypeDeserializer.class)
+        @ValidUserType
         @NotNull
         @Enumerated(EnumType.STRING)
         UserType type,
