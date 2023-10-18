@@ -16,7 +16,7 @@ public class UserTypeDeserializer extends JsonDeserializer<UserType> {
         try {
             return UserType.valueOf(userType);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid user type: " + userType);
+            throw new IllegalArgumentException("Invalid user type: " + userType + "please enter: DOCTOR, NURSE, ADMINISTRATOR");
         }
     }
 }

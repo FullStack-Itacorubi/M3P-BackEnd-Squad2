@@ -12,10 +12,8 @@ public class UserTypeValidator implements ConstraintValidator<ValidUserType, Use
     @Override
     public boolean isValid(UserType userType, ConstraintValidatorContext context) {
         if (userType == null) {
-            return false; // Null values are considered invalid
+            return false;
         }
-
-        // Add your logic to validate UserType
         return userType == UserType.ADMINISTRATOR || userType == UserType.DOCTOR || userType == UserType.NURSE;
     }
 }

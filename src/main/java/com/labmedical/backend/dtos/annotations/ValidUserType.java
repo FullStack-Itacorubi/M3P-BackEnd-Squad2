@@ -1,6 +1,5 @@
 package com.labmedical.backend.dtos.annotations;
 
-import com.labmedical.backend.entities.enums.UserType;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -11,7 +10,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = UserTypeValidator.class)
 @Documented
 public @interface ValidUserType {
-    String message() default "Invalid user type";
+    String message() default "Invalid  ";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
