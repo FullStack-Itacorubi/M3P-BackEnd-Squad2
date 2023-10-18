@@ -4,6 +4,8 @@ import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
 import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
 import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 
+import java.util.List;
+
 public interface ExamService {
 
     PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId);
@@ -13,4 +15,6 @@ public interface ExamService {
     GetResponseExamDTO findExamById(Long id);
 
     void deleteExamById(Long id);
+
+    List<GetResponseExamDTO> findAllByName(String patientName);
 }
