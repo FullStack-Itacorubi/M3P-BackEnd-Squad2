@@ -9,8 +9,11 @@ import com.labmedical.backend.mappers.ExamMapper;
 import com.labmedical.backend.repositories.ExamRepository;
 import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -79,5 +82,23 @@ public class ExamServiceImpl implements ExamService {
         }else{
             examRepository.delete(examOptional.get());
         }
+    }
+
+    @Override
+    public List<GetResponseExamDTO> findAllByName(String patientName) {
+        if (patientName != null) {
+            List<Exam> examList = examRepository.findAllByPatientName(patientName);
+            if (examList == null || examList.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, patientName +
+                        " has no exams");
+            }
+            return examList
+                    .stream()
+                    .map(examMapper::mapExamToGetResponseExamDTO).toList();
+        }
+        return examRepository.findAll()
+                .stream()
+                .map(examMapper::mapExamToGetResponseExamDTO)
+                .toList();
     }
 }

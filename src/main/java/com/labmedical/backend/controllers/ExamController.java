@@ -54,6 +54,12 @@ public class ExamController {
         return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<GetResponseExamDTO>> getExamsByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(examService.findAllByName(patientName), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteExamById(@PathVariable Long id){
