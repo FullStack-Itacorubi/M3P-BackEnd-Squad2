@@ -22,16 +22,12 @@ public class Users extends Person {
 
     @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private UsersType type;
 
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
-    public enum UserType {
-        DOCTOR,
-        ADMINISTRATOR,
-        NURSE
-    }
+
 }
 

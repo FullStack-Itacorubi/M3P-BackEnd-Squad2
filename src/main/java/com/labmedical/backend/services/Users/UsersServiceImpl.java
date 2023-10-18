@@ -37,11 +37,13 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void resetPassword(ResetPasswordRequestDTO resetPasswordRequest) {
         Users user = usersRepository.findByEmail(resetPasswordRequest.email());
-
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
-        user.setPassword(resetPasswordRequest.password());
+        if (!resetPasswordRequest.oldPassword().equals(user.getPassword())) {
+            throw new IllegalArgumentException("Passwords do not match");
+        }
+        user.setPassword(resetPasswordRequest.newPassword());
         usersRepository.save(user);
     }
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.labmedical.backend.dtos.annotations.UserTypeDeserializer;
 import com.labmedical.backend.dtos.annotations.ValidUserType;
 import com.labmedical.backend.entities.Person;
-import com.labmedical.backend.entities.enums.UserType;
+import com.labmedical.backend.entities.UsersType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
@@ -30,7 +30,7 @@ public record CreateUsersRequestDTO(
         @ValidUserType
         @NotNull
         @Enumerated(EnumType.STRING)
-        UserType type,
+        UsersType type,
         @NotNull
         boolean systemStatus
 ) {
