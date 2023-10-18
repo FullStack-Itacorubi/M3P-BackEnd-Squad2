@@ -1,6 +1,5 @@
 package com.labmedical.backend.controllers;
 
-
 import com.labmedical.backend.dtos.Users.UpdateUsersRequestDTO;
 import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
@@ -16,7 +15,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,5 +114,4 @@ public class UsersController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
     }
-
 }

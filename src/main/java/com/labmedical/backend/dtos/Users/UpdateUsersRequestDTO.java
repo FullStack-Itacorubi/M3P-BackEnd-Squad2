@@ -1,7 +1,7 @@
 package com.labmedical.backend.dtos.Users;
 
 import com.labmedical.backend.entities.Person;
-import com.labmedical.backend.entities.enums.UserType;
+import com.labmedical.backend.entities.UsersType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -24,7 +24,7 @@ public record UpdateUsersRequestDTO (
         String password,
 
         @NotNull(message = "User type is required")
-        UserType type,
+        UsersType type,
 
         @NotNull(message = "System status is required")
         Boolean systemStatus
