@@ -6,7 +6,6 @@ import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
 import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExamMapper;
-import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.ExamRepository;
 import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,6 @@ public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private PatientRepository patientRepository;
-
-    @Autowired
-    private PatientService patientService;
-
-    @Autowired
-    private PatientMapper patientMapper;
-
 
     @Override
     public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId) {
