@@ -1,16 +1,17 @@
 package com.labmedical.backend.entities;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "diets")
@@ -37,9 +38,9 @@ public class Diet {
     @Column(name = "time")
     private LocalTime time = LocalTime.now();
 
-    @NotBlank(message = "Type is required")
+    @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
-    private DietType type;
+    private DietType dietType;
 
     @NotBlank(message = "Description is required")
     @Size(min = 1, message = "Description cannot be empty")
@@ -48,6 +49,11 @@ public class Diet {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
+
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     public enum DietType {
         LOW_CARB,
@@ -62,7 +68,7 @@ public class Diet {
     @PrePersist
     @PreUpdate
     private void validateEnumValues() {
-        if (type != null && !EnumUtils.isValidEnum(Medication.MedicationType.class, type.name())) {
+        if (dietType != null && !EnumUtils.isValidEnum(Diet.DietType.class, dietType.name())) {
             throw new IllegalArgumentException("Invalid Diet Type");
         }
     }
