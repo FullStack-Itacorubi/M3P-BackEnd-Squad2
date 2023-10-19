@@ -50,6 +50,12 @@ public class DietController {
         return new ResponseEntity<>(dietService.findDietById(id), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<GetResponseDietDTO>> getDietsByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(dietService.findAllByName(patientName), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteDietById(@PathVariable Long id){

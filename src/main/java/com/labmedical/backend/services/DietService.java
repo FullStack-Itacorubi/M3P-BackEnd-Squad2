@@ -5,6 +5,8 @@ import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
 import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 
+import java.util.List;
+
 public interface DietService {
 
 
@@ -16,4 +18,5 @@ public interface DietService {
 
     void deleteDietById(Long id);
 
+    List<GetResponseDietDTO> findAllByName(String patientName);
 }
