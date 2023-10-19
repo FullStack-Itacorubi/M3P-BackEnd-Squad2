@@ -11,7 +11,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -46,6 +45,12 @@ public class ExerciseController {
     @GetMapping("/{id}")
     public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id) {
         return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResponseExerciseDTO>> getExercisessByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(exerciseService.findAllByName(patientName), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
