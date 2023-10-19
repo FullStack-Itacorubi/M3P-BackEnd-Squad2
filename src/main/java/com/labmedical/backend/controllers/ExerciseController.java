@@ -27,11 +27,11 @@ public class ExerciseController {
 
     @PostMapping
     public ResponseEntity<ResponseExerciseDTO> createExercise(
+
             @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
             @RequestParam Long patientId
     ) {
         return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")
@@ -47,6 +47,12 @@ public class ExerciseController {
         return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ResponseExerciseDTO>> getExercisessByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(exerciseService.findAllByName(patientName), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteExerciseById(@PathVariable Long id) {
@@ -54,6 +60,7 @@ public class ExerciseController {
         exerciseService.deleteExerciseById(id);
 
     }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -83,4 +90,6 @@ public class ExerciseController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exercise not found at the database");
     }
+
 }
+
