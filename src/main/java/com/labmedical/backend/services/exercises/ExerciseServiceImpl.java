@@ -1,4 +1,4 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.exercises;
 
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
@@ -21,10 +21,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseMapper exerciseMapper;
 
     @Override
-    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
+    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO, Long patientId) {
         Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
         return exerciseMapper
-                .mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
+                .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exerciseToUpdate = exerciseMapper.map(requestExerciseDTO);
         exerciseToUpdate.setId(id);
 
-        return exerciseMapper.mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
+        return exerciseMapper.mapToResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         if (exerciseOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return exerciseMapper.mapToPostResponseExerciseDTO(exerciseOptional.get());
+        return exerciseMapper.mapToResponseExerciseDTO(exerciseOptional.get());
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.labmedical.backend.controllers;
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 import com.labmedical.backend.mappers.ExerciseMapper;
-import com.labmedical.backend.services.ExerciseService;
+import com.labmedical.backend.services.exercises.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +28,11 @@ public class ExerciseController {
 
     @PostMapping
     public ResponseEntity<ResponseExerciseDTO> createExercise(
-            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO) {
-        try {
-            return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO), HttpStatus.CREATED);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
-        }
+            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
+            @RequestParam Long patientId
+    ) {
+        return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
+
     }
 
     @PutMapping("/{id}")
