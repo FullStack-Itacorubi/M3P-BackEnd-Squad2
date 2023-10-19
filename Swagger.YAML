@@ -1,0 +1,791 @@
+swagger: '2.0'
+info:
+  title: LabMedical API by Geeky Blinders
+  version: 1.0.0
+tags:
+  - name: Users
+    description: Operations related to users
+  - name: Patients
+    description: Operations related to patients
+  - name: Consultations
+    description: Operations related to consultations
+  - name: Examinations
+    description: Operations related to examinations
+  - name: Medications
+    description: Operations related to medications
+  - name: Diets
+    description: Operations related to diets
+  - name: Exercises
+    description: Operations related to exercises
+  - name: Records
+    description: Operations related to patient records
+  - name: Logs
+    description: Operations related to logs
+  - name: Statistics
+    description: Operations related to statistics
+
+definitions:
+  Person:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      gender:
+        type: string
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      cpf:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      status:
+        type: boolean
+
+  Users:
+    allOf:
+      - $ref: '#/definitions/Person'
+    type: object
+    properties:
+      password:
+        type: string
+      type:
+        type: string
+        enum:
+          - UserType1
+          - UserType2
+      systemStatus:
+        type: boolean
+
+  Patient:
+    allOf:
+      - $ref: '#/definitions/Person'
+    type: object
+    properties:
+      dateOfBirth:
+        type: string
+        format: date
+      rgWithIssuingAuthority:
+        type: string
+      maritalStatus:
+        type: string
+        enum:
+          - SINGLE
+          - MARRIED
+          - DIVORCED
+          - WIDOWED
+      emergencyContact:
+        type: string
+      allergies:
+        type: string
+      specificCare:
+        type: string
+      insurance:
+        type: string
+      insuranceNumber:
+        type: string
+      insuranceValidity:
+        type: string
+        format: date
+      address:
+        $ref: '#/definitions/Address'
+
+  Address:
+    type: object
+    properties:
+      street:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      postalCode:
+        type: string
+      country:
+        type: string
+  Diet:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      dietName:
+        type: string
+      date:
+        type: string
+        format: date
+      time:
+        type: string
+        format: time
+      type:
+        type: string
+        enum:
+          - LOW_CARB
+          - DASH
+          - PALEOLITHIC
+          - KETOGENIC
+          - DUKAN
+          - MEDITERRANEAN
+          - OTHER
+      description:
+        type: string
+      systemStatus:
+        type: boolean
+
+  Exercise:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      exerciseName:
+        type: string
+      date:
+        type: string
+        format: date
+      time:
+        type: string
+        format: time
+      type:
+        type: string
+        enum:
+          - AEROBIC_RESISTANCE
+          - MUSCULAR_RESISTANCE
+          - FLEXIBILITY
+          - STRENGTH
+          - AGILITY
+          - OTHER
+      weeklyAmount:
+        type: integer
+        minimum: 1
+        maximum: 7
+      description:
+        type: string
+      systemStatus:
+        type: boolean
+
+  Medication:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      medicationName:
+        type: string
+      date:
+        type: string
+        format: date
+      time:
+        type: string
+        format: time
+      type:
+        type: string
+        enum:
+          - CAPSULE
+          - TABLET
+          - LIQUID
+          - CREAM
+          - GEL
+          - INHALATION
+          - INJECTION
+          - SPRAY
+      quantity:
+        type: number
+        format: double
+        minimum: 0
+      unit:
+        type: string
+        enum:
+          - MG
+          - MCG
+          - G
+          - ML
+          - PERCENT
+      observations:
+        type: string
+      systemStatus:
+        type: boolean
+
+  RequestAddressDTO:
+    type: object
+    properties:
+      cep:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      street:
+        type: string
+      number:
+        type: string
+      complement:
+        type: string
+      district:
+        type: string
+      reference:
+        type: string
+
+  ResponseAddressDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      cep:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      street:
+        type: string
+      number:
+        type: string
+      complement:
+        type: string
+      district:
+        type: string
+      reference:
+        type: string
+
+  PostRequestPatientDTO:
+    type: object
+    properties:
+      name:
+        type: string
+      gender:
+        type: string
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      cpf:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      status:
+        type: boolean
+      dateOfBirth:
+        type: string
+        format: date
+      rgWithIssuingAuthority:
+        type: string
+      maritalStatus:
+        type: string
+        enum:
+          - SINGLE
+          - MARRIED
+          - DIVORCED
+          - WIDOWED
+      emergencyContact:
+        type: string
+      allergies:
+        type: string
+      specificCare:
+        type: string
+      insurance:
+        type: string
+      insuranceNumber:
+        type: string
+      insuranceValidity:
+        type: string
+        format: date
+      address:
+        $ref: '#/definitions/RequestAddressDTO'
+
+  PostResponsePatientDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      gender:
+        type: string
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      cpf:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      status:
+        type: boolean
+      dateOfBirth:
+        type: string
+        format: date
+      rgWithIssuingAuthority:
+        type: string
+      maritalStatus:
+        type: string
+        enum:
+          - SINGLE
+          - MARRIED
+          - DIVORCED
+          - WIDOWED
+      emergencyContact:
+        type: string
+      allergies:
+        type: string
+      specificCare:
+        type: string
+      insurance:
+        type: string
+      insuranceNumber:
+        type: string
+      insuranceValidity:
+        type: string
+        format: date
+      address:
+        $ref: '#/definitions/ResponseAddressDTO'
+
+  CreateUsersRequestDTO:
+    type: object
+    properties:
+      fullName:
+        type: string
+      gender:
+        type: string
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      cpf:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      type:
+        type: string
+        enum:
+          - UserType1
+          - UserType2
+      systemStatus:
+        type: boolean
+
+  CreateUsersResponseDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      gender:
+        type: string
+      status:
+        type: boolean
+
+  LoginRequestDTO:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+
+  ResetPasswordRequestDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      email:
+        type: string
+      password:
+        type: string
+
+  UpdateUsersRequestDTO:
+    type: object
+    properties:
+      fullName:
+        type: string
+      gender:
+        type: string
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      phone:
+        type: string
+      password:
+        type: string
+      type:
+        type: string
+        enum:
+          - DOCTOR,
+          - ADMINISTRATOR,
+          - NURSE
+      systemStatus:
+        type: boolean
+
+paths:
+  /api/usuarios/login:
+    post:
+      tags:
+        - Users
+      summary: User Login
+      responses:
+        '200':
+          description: Successful login
+  /api/usuarios/reset:
+    post:
+      tags:
+        - Users
+      summary: Reset User Password
+      responses:
+        '204':
+          description: Password reset successful
+  /api/usuarios:
+    post:
+      tags:
+        - Users
+      summary: Create a New User
+      responses:
+        '201':
+          description: User created successfully
+    get:
+      tags:
+        - Users
+      summary: Get all Users
+      responses:
+        '200':
+          description: Successful retrieval of users
+  /api/usuarios/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+
+    put:
+      tags:
+        - Users
+      summary: Update User by ID
+      responses:
+        '204':
+          description: User updated successfully
+    get:
+      tags:
+        - Users
+      summary: Get User by ID
+      responses:
+        '200':
+          description: Successful retrieval of user by ID
+    delete:
+      tags:
+        - Users
+      summary: Delete User by ID
+      responses:
+        '204':
+          description: User deleted successfully
+
+  /api/pacientes:
+    post:
+      tags:
+        - Patients
+      summary: Create a New Patient
+      responses:
+        '201':
+          description: Patient created successfully
+    get:
+      tags:
+        - Patients
+      summary: Get all Patients
+      responses:
+        '200':
+          description: Successful retrieval of patients
+  /api/pacientes/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Patients
+      summary: Update Patient by ID
+      responses:
+        '204':
+          description: Patient updated successfully
+    get:
+      tags:
+        - Patients
+      summary: Get Patient by ID
+      responses:
+        '200':
+          description: Successful retrieval of patient by ID
+    delete:
+      tags:
+        - Patients
+      summary: Delete Patient by ID
+      responses:
+        '204':
+          description: Patient deleted successfully
+  /api/consultas:
+    post:
+      tags:
+        - Consultations
+      summary: Create a New Consultation
+      responses:
+        '201':
+          description: Consultation created successfully
+    get:
+      tags:
+        - Consultations
+      summary: Get Consultations by Patient
+      responses:
+        '200':
+          description: Successful retrieval of patient's consultations
+  /api/consultas/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Consultations
+      summary: Update Consultation
+      responses:
+        '204':
+          description: Consultation updated successfully
+    get:
+      tags:
+        - Consultations
+      summary: Get Consultation by ID
+      responses:
+        '200':
+          description: Successful retrieval of consultation by ID
+    delete:
+      tags:
+        - Consultations
+      summary: Delete Consultation by ID
+      responses:
+        '204':
+          description: Consultation deleted successfully
+  /api/exames:
+    post:
+      tags:
+        - Examinations
+      summary: Create a New Examination
+      responses:
+        '201':
+          description: Examination created successfully
+    get:
+      tags:
+        - Examinations
+      summary: Get Examinations by Patient
+      responses:
+        '200':
+          description: Successful retrieval of patient's examinations
+  /api/exames/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Examinations
+      summary: Update Examination by ID
+      responses:
+        '204':
+          description: Examination updated successfully
+    get:
+      tags:
+        - Examinations
+      summary: Get Examination by ID
+      responses:
+        '200':
+          description: Successful retrieval of examination by ID
+    delete:
+      tags:
+        - Examinations
+      summary: Delete Examination by ID
+      responses:
+        '204':
+          description: Examination deleted successfully
+  /api/medicamentos:
+    post:
+      tags:
+        - Medications
+      summary: Create a New Medication
+      responses:
+        '201':
+          description: Medication created successfully
+    get:
+      tags:
+        - Medications
+      summary: Get Medications by User
+      responses:
+        '200':
+          description: Successful retrieval of user's medications
+  /api/medicamentos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Medications
+      summary: Update Medication by ID
+      responses:
+        '204':
+          description: Medication updated successfully
+    get:
+      tags:
+        - Medications
+      summary: Get Medication by ID
+      responses:
+        '200':
+          description: Successful retrieval of medication by ID
+    delete:
+      tags:
+        - Medications
+      summary: Delete Medication by ID
+      responses:
+        '204':
+          description: Medication deleted successfully
+  /api/dietas:
+    post:
+      tags:
+        - Diets
+      summary: Create a New Diet
+      responses:
+        '201':
+          description: Diet created successfully
+    get:
+      tags:
+        - Diets
+      summary: Get Diets by Patient
+      responses:
+        '200':
+          description: Successful retrieval of patient's diets
+  /api/dietas/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Diets
+      summary: Update Diet by ID
+      responses:
+        '204':
+          description: Diet updated successfully
+    get:
+      tags:
+        - Diets
+      summary: Get Diet by ID
+      responses:
+        '200':
+          description: Successful retrieval of diet by ID
+    delete:
+      tags:
+        - Diets
+      summary: Delete Diet by ID
+      responses:
+        '204':
+          description: Diet deleted successfully
+  /api/exercicios:
+    post:
+      tags:
+        - Exercises
+      summary: Create a New Exercise
+      responses:
+        '201':
+          description: Exercise created successfully
+    get:
+      tags:
+        - Exercises
+      summary: Get Exercises by Patient
+      responses:
+        '200':
+          description: Successful retrieval of patient's exercises
+  /api/exercicios/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    put:
+      tags:
+        - Exercises
+      summary: Update Exercise by ID
+      responses:
+        '204':
+          description: Exercise updated successfully
+    get:
+      tags:
+        - Exercises
+      summary: Get Exercise by ID
+      responses:
+        '200':
+          description: Successful retrieval of exercise by ID
+    delete:
+      tags:
+        - Exercises
+      summary: Delete Exercise by ID
+      responses:
+        '204':
+          description: Exercise deleted successfully
+  /api/prontuarios:
+    get:
+      tags:
+        - Records
+      summary: List all Records
+      responses:
+        '200':
+          description: Successful retrieval of all records
+  /api/prontuarios/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    get:
+      tags:
+        - Records
+      summary: Get Records by Patient
+      responses:
+        '200':
+          description: Successful retrieval of records by patient
+  /api/logs:
+    get:
+      tags:
+        - Logs
+      summary: Log Records Listing Endpoint
+      responses:
+        '200':
+          description: Successful retrieval of logs
+  /api/estatisticas:
+    get:
+      tags:
+        - Statistics
+      summary: Statistics Listing Endpoint
+      responses:
+        '200':
+          description: Successful retrieval of statistics

@@ -13,8 +13,10 @@ public interface ExerciseMapper {
 
     Exercise map(ResponseExerciseDTO source);
 
-    RequestExerciseDTO mapToPostRequestExerciseDTO(Exercise source);
 
-    ResponseExerciseDTO mapToPostResponseExerciseDTO(Exercise source);
+    RequestExerciseDTO mapToRequestExerciseDTO(Exercise source);
+
+    ResponseExerciseDTO mapToResponseExerciseDTO(Exercise source);
 
 }
+
