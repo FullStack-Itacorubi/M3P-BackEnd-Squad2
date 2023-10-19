@@ -1,27 +1,21 @@
 package com.labmedical.backend.services;
 
-<<<<<<< HEAD
 import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
-import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-=======
-import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
-import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
->>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
+import com.labmedical.backend.dtos.diets.RequestDietDTO;
+import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
+import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.repositories.DietRepository;
+import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-=======
->>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
 
 @Service
 public class DietServiceImpl implements DietService {
@@ -32,12 +26,12 @@ public class DietServiceImpl implements DietService {
     @Autowired
     private DietMapper dietMapper;
 
-<<<<<<< HEAD
 
     @Autowired
     private PatientRepository patientRepository;
 
-    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO
+    @Override
+    public ResponseDietDTO createDiet(RequestDietDTO requestDietDTO
             , Long patientId
     ){
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
@@ -45,15 +39,16 @@ public class DietServiceImpl implements DietService {
         if(patientOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-=======
-    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO){
->>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
-        Diet dietToSave = dietMapper.map(postRequestDietDTO);
-        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToSave));
+        Diet dietToSave = dietMapper.map(requestDietDTO);
+        dietToSave.setSystemStatus(true);
+        dietToSave.setPatient(patientOptional.get());
+
+        return dietMapper
+                .mapToResponseDietDTO(dietRepository.save(dietToSave));
     }
 
     @Override
-    public PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO) {
+    public ResponseDietDTO updateDiet(Long id, RequestDietDTO requestDietDTO) {
         Optional<Diet> dietOptional = dietRepository.findById(id);
         if (dietOptional.isEmpty()) {
             throw new NoSuchElementException();
@@ -64,12 +59,13 @@ public class DietServiceImpl implements DietService {
         if(patientOptional.isEmpty()){
             throw new NoSuchElementException();
         }
-        Diet dietToUpdate = dietMapper.map(postRequestDietDTO);
+        Diet dietToUpdate = dietMapper.map(requestDietDTO);
         dietToUpdate.setPatient(patientOptional.get());
 
         dietToUpdate.setId(id);
 
-        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToUpdate));}
+        return dietMapper.mapToResponseDietDTO(dietRepository.save(dietToUpdate));
+    }
 
     @Override
     public GetResponseDietDTO findDietById(Long id) {

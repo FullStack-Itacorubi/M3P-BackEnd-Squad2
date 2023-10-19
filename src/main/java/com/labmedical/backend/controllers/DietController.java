@@ -1,13 +1,8 @@
 package com.labmedical.backend.controllers;
 
-<<<<<<< HEAD
 import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
-import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-=======
-import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
-import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
->>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
+import com.labmedical.backend.dtos.diets.RequestDietDTO;
+import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +12,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,20 +27,21 @@ public class DietController {
     private DietMapper dietMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseDietDTO> createDiet(
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
-        try {
-            return new ResponseEntity<>(dietService.createDiet(postRequestDietDTO), HttpStatus.CREATED);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
-        }
-    }
+    public ResponseEntity<ResponseDietDTO> createDiet(
+            @Validated @RequestBody RequestDietDTO requestDietDTO
+            , @RequestParam Long patientId
+    ) {
+            return new ResponseEntity<>(dietService.createDiet(requestDietDTO
+                    , patientId
+            ) ,HttpStatus.CREATED);
+      }
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDietDTO> updateDiet(
+    public ResponseEntity<ResponseDietDTO> updateDiet(
             @PathVariable Long id,
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
-        return new ResponseEntity<>(dietService.updateDiet(id, postRequestDietDTO), HttpStatus.OK);
+            @Validated @RequestBody RequestDietDTO requestDietDTO) {
+        return new ResponseEntity<>(dietService.updateDiet(id, requestDietDTO), HttpStatus.OK);
 
     }
 
