@@ -1,12 +1,21 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.repositories.ExerciseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
+import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 
-@Service
-public class ExerciseService {
+import java.util.List;
 
-    @Autowired
-    private ExerciseRepository exerciseRepository;
+public interface ExerciseService {
+
+    ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO, Long patientId);
+
+    ResponseExerciseDTO updateExercise(Long id, RequestExerciseDTO requestExerciseDTO);
+
+    ResponseExerciseDTO findExerciseById(Long id);
+
+    void deleteExerciseById(Long id);
+
+    List<ResponseExerciseDTO> findAllByName(String patientName);
+
 }
+
