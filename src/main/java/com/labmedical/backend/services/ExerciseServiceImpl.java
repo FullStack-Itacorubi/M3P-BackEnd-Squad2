@@ -1,24 +1,20 @@
 package com.labmedical.backend.services;
 
-<<<<<<< HEAD
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
-=======
-import com.labmedical.backend.dtos.exercises.PostRequestExerciseDTO;
-import com.labmedical.backend.dtos.exercises.PostResponseExerciseDTO;
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 import com.labmedical.backend.entities.Exercise;
+import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExerciseMapper;
 import com.labmedical.backend.repositories.ExerciseRepository;
+import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-<<<<<<< HEAD
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-=======
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
 
@@ -28,15 +24,22 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseMapper exerciseMapper;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     @Override
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> parent of 6439e70 (fix(save-exercise): add relationship between exercise and patient to save exercise function)
-    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
+    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO, Long patientId) {
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+
+        if(patientOptional.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
         Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
+        exerciseToSave.setSystemStatus(true);
+        exerciseToSave.setPatient(patientOptional.get());
+
         return exerciseMapper
-                .mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
+                .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
     }
 
     @Override
@@ -49,7 +52,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exerciseToUpdate = exerciseMapper.map(requestExerciseDTO);
         exerciseToUpdate.setId(id);
 
-        return exerciseMapper.mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
+        return exerciseMapper.mapToResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
     }
 
     @Override
@@ -58,7 +61,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         if (exerciseOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return exerciseMapper.mapToPostResponseExerciseDTO(exerciseOptional.get());
+        return exerciseMapper.mapToResponseExerciseDTO(exerciseOptional.get());
     }
 
     @Override
@@ -70,14 +73,9 @@ public class ExerciseServiceImpl implements ExerciseService {
             exerciseRepository.delete(exerciseOptional.get());
         }
     }
-<<<<<<< HEAD
-=======
-=======
-    public PostResponseExerciseDTO createExercise(PostRequestExerciseDTO postRequestExerciseDTO) {
-        Exercise exerciseToSave = exerciseMapper.map(postRequestExerciseDTO);
+    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
+        Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
         return exerciseMapper
-                .mapToPostResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
+                .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
     }
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
->>>>>>> parent of 6439e70 (fix(save-exercise): add relationship between exercise and patient to save exercise function)
 }

@@ -6,7 +6,7 @@ import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 
 public interface ExerciseService {
 
-    ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO);
+    ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO, Long patientId);
 
     ResponseExerciseDTO updateExercise(Long id, RequestExerciseDTO requestExerciseDTO);
 

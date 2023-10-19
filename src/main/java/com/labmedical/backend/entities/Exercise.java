@@ -3,6 +3,7 @@ package com.labmedical.backend.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.apache.commons.lang3.EnumUtils;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.time.LocalTime;
 
 @Data
 @Entity
-@Table(name = "tb_exercise")
+@Table(name = "exercises")
 public class Exercise {
 
     @Id
@@ -31,9 +32,9 @@ public class Exercise {
     private LocalTime time;
 
     @NotNull(message = "Type is required")
-    @Column(name = "type",nullable = false)
+    @Column(name = "exercise_type",nullable = false)
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private ExerciseType exerciseType;
 
     @NotNull(message= "Exercise weekly amount value may not be empty")
     @Column(name = "weekly_amount",nullable = false)
@@ -49,18 +50,28 @@ public class Exercise {
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
-<<<<<<< HEAD
-=======
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
->>>>>>> parent of 6439e70 (fix(save-exercise): add relationship between exercise and patient to save exercise function)
 
 
-    public enum Type {
+
+    public enum ExerciseType {
         AEROBIC_RESISTANCE,
         MUSCULAR_RESISTANCE,
         FLEXIBILITY,
         STRENGTH,
         AGILITY,
         OTHER
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validateEnumValues() {
+        if (exerciseType != null && !EnumUtils.isValidEnum(Exercise.ExerciseType.class, exerciseType.name())) {
+            throw new IllegalArgumentException("Invalid Exercise Type");
+        }
     }
 }
