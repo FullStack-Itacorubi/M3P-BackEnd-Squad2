@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,11 +28,12 @@ public class ExerciseController {
 
     @PostMapping
     public ResponseEntity<ResponseExerciseDTO> createExercise(
-
-            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
-            @RequestParam Long patientId
-    ) {
-        return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
+            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO) {
+        try {
+            return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO), HttpStatus.CREATED);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
+        }
     }
 
     @PutMapping("/{id}")
@@ -43,24 +45,17 @@ public class ExerciseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id) {
+    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id){
         return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ResponseExerciseDTO>> getExercisessByPatientName(
-            @RequestParam(required = false, name = "patientName") String patientName) {
-        return new ResponseEntity<>(exerciseService.findAllByName(patientName), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteExerciseById(@PathVariable Long id) {
+    public void deleteExerciseById(@PathVariable Long id){
 
         exerciseService.deleteExerciseById(id);
 
     }
-
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -90,6 +85,4 @@ public class ExerciseController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exercise not found at the database");
     }
-
 }
-
