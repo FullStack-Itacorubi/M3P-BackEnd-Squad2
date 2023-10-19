@@ -1,12 +1,7 @@
 package com.labmedical.backend.controllers;
 
-<<<<<<< HEAD
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
-=======
-import com.labmedical.backend.dtos.exercises.PostRequestExerciseDTO;
-import com.labmedical.backend.dtos.exercises.PostResponseExerciseDTO;
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 import com.labmedical.backend.mappers.ExerciseMapper;
 import com.labmedical.backend.services.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +11,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,23 +26,14 @@ public class ExerciseController {
     private ExerciseMapper exerciseMapper;
 
     @PostMapping
-<<<<<<< HEAD
     public ResponseEntity<ResponseExerciseDTO> createExercise(
-            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO) {
-        try {
-            return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO), HttpStatus.CREATED);
-=======
-    public ResponseEntity<PostResponseExerciseDTO> createExercise(
-            @Validated @RequestBody PostRequestExerciseDTO postRequestExerciseDTO) {
-        try {
-            return new ResponseEntity<>(exerciseService.createExercise(postRequestExerciseDTO), HttpStatus.CREATED);
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error");
-        }
+            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
+            @RequestParam Long patientId
+    ) {
+        return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
+
     }
 
-<<<<<<< HEAD
     @PutMapping("/{id}")
     public ResponseEntity<ResponseExerciseDTO> updateExercise(
             @PathVariable Long id,
@@ -58,20 +43,18 @@ public class ExerciseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id){
+    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id) {
         return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteExerciseById(@PathVariable Long id){
+    public void deleteExerciseById(@PathVariable Long id) {
 
         exerciseService.deleteExerciseById(id);
 
     }
 
-=======
->>>>>>> ab87a59 (feat(create-exercise): add endpoint to POST request and functions on controller and service)
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
