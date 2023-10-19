@@ -10,6 +10,7 @@ import java.time.LocalTime;
 
 public record PostRequestDietDTO(
         @NotBlank(message = "Diet Name is required")
+        @Size(min = 5, max = 100, message = "Diet Name must be between 5 and 100 characters")
         String dietName,
 
         @NotNull(message = "Date is required")
@@ -18,14 +19,12 @@ public record PostRequestDietDTO(
         @NotNull(message = "Time is required")
         LocalTime time,
 
-        @NotBlank(message = "Type is required")
-        Diet.DietType type,
+        Diet.DietType dietType,
 
         @NotBlank(message = "Description is required")
         @Size(min = 1, message = "Description cannot be empty")
         String description,
 
-        @NotNull(message = "System Status is required")
         Boolean systemStatus
 ) {
 }

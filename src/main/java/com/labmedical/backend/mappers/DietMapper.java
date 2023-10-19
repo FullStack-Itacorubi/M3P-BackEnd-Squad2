@@ -1,9 +1,8 @@
 package com.labmedical.backend.mappers;
-
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
 import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-
+import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
+import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
