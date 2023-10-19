@@ -1,7 +1,6 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.diets;
 
 
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.RequestDietDTO;
 import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 
@@ -14,9 +13,9 @@ public interface DietService {
 
     ResponseDietDTO updateDiet(Long id, RequestDietDTO requestDietDTO);
 
-    GetResponseDietDTO findDietById(Long id);
+    ResponseDietDTO findDietById(Long id);
 
     void deleteDietById(Long id);
 
-    List<GetResponseDietDTO> findAllByName(String patientName);
+    List<ResponseDietDTO> findAllByName(String patientName);
 }

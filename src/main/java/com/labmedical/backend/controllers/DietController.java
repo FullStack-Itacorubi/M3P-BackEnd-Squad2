@@ -1,10 +1,9 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.RequestDietDTO;
 import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.mappers.DietMapper;
-import com.labmedical.backend.services.DietService;
+import com.labmedical.backend.services.diets.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,12 +45,12 @@ public class DietController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetResponseDietDTO> getDietById(@PathVariable Long id){
+    public ResponseEntity<ResponseDietDTO> getDietById(@PathVariable Long id){
         return new ResponseEntity<>(dietService.findDietById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<GetResponseDietDTO>> getDietsByPatientName(
+    public ResponseEntity<List<ResponseDietDTO>> getDietsByPatientName(
             @RequestParam(required = false, name = "patientName") String patientName) {
         return new ResponseEntity<>(dietService.findAllByName(patientName), HttpStatus.OK);
     }
