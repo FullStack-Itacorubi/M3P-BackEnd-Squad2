@@ -51,12 +51,18 @@ public class DietServiceImpl implements DietService {
         if (dietOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
+        Long patientId = dietOptional.get().getPatient().getId();
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
+        if(patientOptional.isEmpty()){
+            throw new NoSuchElementException();
+        }
         Diet dietToUpdate = dietMapper.map(postRequestDietDTO);
+        dietToUpdate.setPatient(patientOptional.get());
+
         dietToUpdate.setId(id);
 
-        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToUpdate));
-    }
+        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToUpdate));}
 
     @Override
     public GetResponseDietDTO findDietById(Long id) {
