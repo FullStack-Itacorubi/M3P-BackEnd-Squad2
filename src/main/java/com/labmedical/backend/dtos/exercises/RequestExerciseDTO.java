@@ -22,7 +22,7 @@ public record RequestExerciseDTO(
         LocalTime time,
 
         @NotNull(message = "Type is required")
-        Exercise.Type type,
+        Exercise.ExerciseType exerciseType,
 
         @NotNull(message = "Exercise weekly amount value may not be empty")
         @Range(min = 1, max = 7, message = "Exercise weekly amount value must be between 1 and 7")
@@ -32,7 +32,6 @@ public record RequestExerciseDTO(
         @Size(min = 10, max = 1000, message = "Exercise description must be between 10 and 1000 characters")
         String description,
 
-        @NotNull(message = "System Status is required")
         Boolean systemStatus
         ) {
 }

@@ -33,7 +33,7 @@ public class Exercise {
     @NotNull(message = "Type is required")
     @Column(name = "type",nullable = false)
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private ExerciseType exerciseType;
 
     @NotNull(message= "Exercise weekly amount value may not be empty")
     @Column(name = "weekly_amount",nullable = false)
@@ -52,7 +52,7 @@ public class Exercise {
 
 
 
-    public enum Type {
+    public enum ExerciseType {
         AEROBIC_RESISTANCE,
         MUSCULAR_RESISTANCE,
         FLEXIBILITY,

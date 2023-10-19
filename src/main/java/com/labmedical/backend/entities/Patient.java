@@ -61,9 +61,6 @@ public class Patient extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examList;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Diet> dietList;
-
     public enum MaritalStatus {
         SINGLE,
         MARRIED,

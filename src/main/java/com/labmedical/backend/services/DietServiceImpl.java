@@ -1,21 +1,27 @@
 package com.labmedical.backend.services;
 
+<<<<<<< HEAD
 import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
 import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
+=======
+import com.labmedical.backend.dtos.logs.PostRequestDietDTO;
+import com.labmedical.backend.dtos.logs.PostResponseDietDTO;
+>>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
 import com.labmedical.backend.entities.Diet;
-import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.repositories.DietRepository;
-import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+=======
+>>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
 
 @Service
 public class DietServiceImpl implements DietService {
@@ -26,6 +32,7 @@ public class DietServiceImpl implements DietService {
     @Autowired
     private DietMapper dietMapper;
 
+<<<<<<< HEAD
 
     @Autowired
     private PatientRepository patientRepository;
@@ -38,12 +45,11 @@ public class DietServiceImpl implements DietService {
         if(patientOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
+=======
+    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO){
+>>>>>>> parent of bafef2e (fix(save-diet): add patient relationship when saving a diet instance and fix exception handlers)
         Diet dietToSave = dietMapper.map(postRequestDietDTO);
-        dietToSave.setSystemStatus(true);
-        dietToSave.setPatient(patientOptional.get());
-
-        return dietMapper
-                .mapToPostResponseDietDTO(dietRepository.save(dietToSave));
+        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToSave));
     }
 
     @Override
