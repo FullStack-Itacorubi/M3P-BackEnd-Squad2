@@ -3,7 +3,7 @@ package com.labmedical.backend.controllers;
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 import com.labmedical.backend.mappers.ExerciseMapper;
-import com.labmedical.backend.services.ExerciseService;
+import com.labmedical.backend.services.exercises.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,6 @@ public class ExerciseController {
             @RequestParam Long patientId
     ) {
         return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")

@@ -1,4 +1,4 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.exercises;
 
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
