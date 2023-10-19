@@ -1,9 +1,7 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.exercises;
 
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
-
-import java.util.List;
 
 public interface ExerciseService {
 
@@ -14,8 +12,4 @@ public interface ExerciseService {
     ResponseExerciseDTO findExerciseById(Long id);
 
     void deleteExerciseById(Long id);
-
-    List<ResponseExerciseDTO> findAllByName(String patientName);
-
 }
-
