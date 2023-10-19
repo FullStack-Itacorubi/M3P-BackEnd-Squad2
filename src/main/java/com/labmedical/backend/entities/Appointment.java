@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -30,7 +31,7 @@ public class Appointment {
     private String reason;
 
     @NotNull(message = "Consultation date is required")
-    private LocalDateTime consultationDate;
+    private LocalDate consultationDate;
 
     @NotNull(message = "Consultation time is required")
     private LocalTime consultationTime;
