@@ -24,6 +24,7 @@ public record RequestExerciseDTO(
         @NotNull(message = "Type is required")
         Exercise.ExerciseType exerciseType,
 
+
         @NotNull(message = "Exercise weekly amount value may not be empty")
         @Range(min = 1, max = 7, message = "Exercise weekly amount value must be between 1 and 7")
         Integer weeklyAmount,

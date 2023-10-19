@@ -1,6 +1,5 @@
 package com.labmedical.backend.mappers;
 
-
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 import com.labmedical.backend.entities.Exercise;
@@ -14,9 +13,10 @@ public interface ExerciseMapper {
 
     Exercise map(ResponseExerciseDTO source);
 
+
     RequestExerciseDTO mapToRequestExerciseDTO(Exercise source);
 
     ResponseExerciseDTO mapToResponseExerciseDTO(Exercise source);
 
-
 }
+

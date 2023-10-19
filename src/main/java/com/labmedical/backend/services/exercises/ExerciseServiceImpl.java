@@ -3,14 +3,10 @@ package com.labmedical.backend.services.exercises;
 import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
 import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
 import com.labmedical.backend.entities.Exercise;
-import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExerciseMapper;
 import com.labmedical.backend.repositories.ExerciseRepository;
-import com.labmedical.backend.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,20 +20,9 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseMapper exerciseMapper;
 
-    @Autowired
-    private PatientRepository patientRepository;
-
     @Override
     public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO, Long patientId) {
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
-
-        if(patientOptional.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
-        }
         Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
-        exerciseToSave.setSystemStatus(true);
-        exerciseToSave.setPatient(patientOptional.get());
-
         return exerciseMapper
                 .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
     }
@@ -72,10 +57,5 @@ public class ExerciseServiceImpl implements ExerciseService {
         }else{
             exerciseRepository.delete(exerciseOptional.get());
         }
-    }
-    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
-        Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
-        return exerciseMapper
-                .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
     }
 }
