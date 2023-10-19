@@ -33,7 +33,7 @@ public class Exercise {
     @NotNull(message = "Type is required")
     @Column(name = "type",nullable = false)
     @Enumerated(EnumType.STRING)
-    private ExerciseType exerciseType;
+    private Type type;
 
     @NotNull(message= "Exercise weekly amount value may not be empty")
     @Column(name = "weekly_amount",nullable = false)
@@ -49,10 +49,13 @@ public class Exercise {
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 6439e70 (fix(save-exercise): add relationship between exercise and patient to save exercise function)
 
 
-
-    public enum ExerciseType {
+    public enum Type {
         AEROBIC_RESISTANCE,
         MUSCULAR_RESISTANCE,
         FLEXIBILITY,

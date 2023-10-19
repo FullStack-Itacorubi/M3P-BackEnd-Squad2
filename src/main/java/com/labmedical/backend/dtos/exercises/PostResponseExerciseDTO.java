@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.Range;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record RequestExerciseDTO(
+public record PostResponseExerciseDTO(
+
+        Long id,
 
         @NotBlank(message = "Exercise name is required")
         @Size(min = 5, max = 100, message = "Exersise name must be between 05 and 100 characters")

@@ -61,6 +61,12 @@ public class Patient extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examList;
 
+<<<<<<< HEAD
+=======
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Diet> dietList;
+
+>>>>>>> parent of 6439e70 (fix(save-exercise): add relationship between exercise and patient to save exercise function)
     public enum MaritalStatus {
         SINGLE,
         MARRIED,
