@@ -7,6 +7,8 @@ import com.labmedical.backend.entities.Diet;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+
+
 @Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface DietMapper {
     Diet map(RequestDietDTO source);
@@ -15,9 +17,9 @@ public interface DietMapper {
 
     Diet map(GetResponseDietDTO source);
 
-    RequestDietDTO mapToPostRequestDietDTO(Diet source);
+    RequestDietDTO mapToRequestDietDTO(Diet source);
 
-    ResponseDietDTO mapToPostResponseDietDTO(Diet source);
+    ResponseDietDTO mapToResponseDietDTO(Diet source);
 
     GetResponseDietDTO mapToGetResponseDietDTO(Diet source);
 

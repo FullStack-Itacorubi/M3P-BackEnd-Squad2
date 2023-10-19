@@ -43,7 +43,7 @@ public class DietServiceImpl implements DietService {
         dietToSave.setPatient(patientOptional.get());
 
         return dietMapper
-                .mapToPostResponseDietDTO(dietRepository.save(dietToSave));
+                .mapToResponseDietDTO(dietRepository.save(dietToSave));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class DietServiceImpl implements DietService {
 
         dietToUpdate.setId(id);
 
-        return dietMapper.mapToPostResponseDietDTO(dietRepository.save(dietToUpdate));}
+        return dietMapper.mapToResponseDietDTO(dietRepository.save(dietToUpdate));}
 
     @Override
     public GetResponseDietDTO findDietById(Long id) {

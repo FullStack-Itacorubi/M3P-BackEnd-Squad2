@@ -1,5 +1,8 @@
 package com.labmedical.backend.dtos.patients;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.labmedical.backend.dtos.annotations.MaritalStatusDeserializer;
+import com.labmedical.backend.dtos.annotations.ValidMaritalStatus;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.entities.Person;
@@ -38,7 +41,9 @@ public record PostRequestPatientDTO(
         @NotBlank(message = "is required")
         String rgWithIssuingAuthority,
 
-        @NotNull(message = "is required")
+        @JsonDeserialize(using = MaritalStatusDeserializer.class)
+        @ValidMaritalStatus
+        @NotNull(message = "Marital Status is required")
         Patient.MaritalStatus maritalStatus,
 
         @NotBlank(message = "number is required")

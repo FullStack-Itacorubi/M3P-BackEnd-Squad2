@@ -12,7 +12,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,6 +35,7 @@ public class DietController {
                     , patientId
             ) ,HttpStatus.CREATED);
       }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponseDietDTO> updateDiet(
@@ -84,15 +84,6 @@ public class DietController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Object> handleNoSuchElementException(ResponseStatusException ex) {
-        Throwable errorCause = ex.getCause();
-        if (errorCause != null) {
-            String errorMessage = errorCause.getMessage();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found at the database");
-    }
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex) {
         Throwable errorCause = ex.getCause();
@@ -100,9 +91,7 @@ public class DietController {
             String errorMessage = errorCause.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diet not found at the database");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found at the database");
     }
-
-
 
 }
