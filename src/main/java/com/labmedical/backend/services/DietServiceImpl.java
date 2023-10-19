@@ -1,7 +1,7 @@
 package com.labmedical.backend.services;
 
-import com.labmedical.backend.dtos.diet.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diet.PostResponseDietDTO;
+import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
+import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.DietMapper;

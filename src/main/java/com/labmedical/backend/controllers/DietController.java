@@ -1,11 +1,10 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.diet.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diet.PostResponseDietDTO;
+import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
+import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
