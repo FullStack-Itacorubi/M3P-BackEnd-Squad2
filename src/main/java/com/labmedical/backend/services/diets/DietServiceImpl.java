@@ -56,7 +56,7 @@ public class DietServiceImpl implements DietService {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
         if(patientOptional.isEmpty()){
-            throw new NoSuchElementException();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
         Diet dietToUpdate = dietMapper.map(requestDietDTO);
         dietToUpdate.setPatient(patientOptional.get());

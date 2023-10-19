@@ -7,19 +7,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 
-
 @Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface DietMapper {
     Diet map(RequestDietDTO source);
 
     Diet map(ResponseDietDTO source);
 
-    Diet map(GetResponseDietDTO source);
-
     RequestDietDTO mapToRequestDietDTO(Diet source);
 
     ResponseDietDTO mapToResponseDietDTO(Diet source);
 
-    GetResponseDietDTO mapToGetResponseDietDTO(Diet source);
 
 }
