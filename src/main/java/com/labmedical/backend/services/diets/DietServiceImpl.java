@@ -1,6 +1,5 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.diets;
 
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.RequestDietDTO;
 import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
@@ -66,12 +65,12 @@ public class DietServiceImpl implements DietService {
         return dietMapper.mapToResponseDietDTO(dietRepository.save(dietToUpdate));}
 
     @Override
-    public GetResponseDietDTO findDietById(Long id) {
+    public ResponseDietDTO findDietById(Long id) {
         Optional<Diet> dietOptional = dietRepository.findById(id);
         if (dietOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return dietMapper.mapToGetResponseDietDTO(dietOptional.get());
+        return dietMapper.mapToResponseDietDTO(dietOptional.get());
     }
 
     @Override
@@ -85,7 +84,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<GetResponseDietDTO> findAllByName(String patientName) {
+    public List<ResponseDietDTO> findAllByName(String patientName) {
         if (patientName != null) {
             List<Diet> examList = dietRepository.findAllByPatientName(patientName);
             if (examList == null || examList.isEmpty()) {
@@ -94,11 +93,11 @@ public class DietServiceImpl implements DietService {
             }
             return examList
                     .stream()
-                    .map(dietMapper::mapToGetResponseDietDTO).toList();
+                    .map(dietMapper::mapToResponseDietDTO).toList();
         }
         return dietRepository.findAll()
                 .stream()
-                .map(dietMapper::mapToGetResponseDietDTO)
+                .map(dietMapper::mapToResponseDietDTO)
                 .toList();
     }
 }

@@ -1,6 +1,5 @@
 package com.labmedical.backend.mappers;
 
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.RequestDietDTO;
 import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
