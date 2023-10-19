@@ -1,10 +1,8 @@
 package com.labmedical.backend.controllers;
 
+import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
 import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
 import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
