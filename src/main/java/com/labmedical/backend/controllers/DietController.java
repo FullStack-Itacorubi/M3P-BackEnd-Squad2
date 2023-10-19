@@ -1,8 +1,8 @@
 package com.labmedical.backend.controllers;
 
 import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
-import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
+import com.labmedical.backend.dtos.diets.RequestDietDTO;
+import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.mappers.DietMapper;
 import com.labmedical.backend.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +28,20 @@ public class DietController {
     private DietMapper dietMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseDietDTO> createDiet(
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO
+    public ResponseEntity<ResponseDietDTO> createDiet(
+            @Validated @RequestBody RequestDietDTO requestDietDTO
             , @RequestParam Long patientId
     ) {
-            return new ResponseEntity<>(dietService.createDiet(postRequestDietDTO
+            return new ResponseEntity<>(dietService.createDiet(requestDietDTO
                     , patientId
             ) ,HttpStatus.CREATED);
       }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDietDTO> updateDiet(
+    public ResponseEntity<ResponseDietDTO> updateDiet(
             @PathVariable Long id,
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
-        return new ResponseEntity<>(dietService.updateDiet(id, postRequestDietDTO), HttpStatus.OK);
+            @Validated @RequestBody RequestDietDTO requestDietDTO) {
+        return new ResponseEntity<>(dietService.updateDiet(id, requestDietDTO), HttpStatus.OK);
 
     }
 

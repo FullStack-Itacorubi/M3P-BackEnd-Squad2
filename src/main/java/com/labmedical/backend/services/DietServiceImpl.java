@@ -1,8 +1,8 @@
 package com.labmedical.backend.services;
 
 import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
-import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
+import com.labmedical.backend.dtos.diets.RequestDietDTO;
+import com.labmedical.backend.dtos.diets.ResponseDietDTO;
 import com.labmedical.backend.entities.Diet;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.DietMapper;
@@ -30,7 +30,7 @@ public class DietServiceImpl implements DietService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO
+    public ResponseDietDTO createDiet(RequestDietDTO requestDietDTO
             , Long patientId
     ){
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
@@ -38,7 +38,7 @@ public class DietServiceImpl implements DietService {
         if(patientOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-        Diet dietToSave = dietMapper.map(postRequestDietDTO);
+        Diet dietToSave = dietMapper.map(requestDietDTO);
         dietToSave.setSystemStatus(true);
         dietToSave.setPatient(patientOptional.get());
 
@@ -47,7 +47,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO) {
+    public ResponseDietDTO updateDiet(Long id, RequestDietDTO requestDietDTO) {
         Optional<Diet> dietOptional = dietRepository.findById(id);
         if (dietOptional.isEmpty()) {
             throw new NoSuchElementException();
@@ -58,7 +58,7 @@ public class DietServiceImpl implements DietService {
         if(patientOptional.isEmpty()){
             throw new NoSuchElementException();
         }
-        Diet dietToUpdate = dietMapper.map(postRequestDietDTO);
+        Diet dietToUpdate = dietMapper.map(requestDietDTO);
         dietToUpdate.setPatient(patientOptional.get());
 
         dietToUpdate.setId(id);
