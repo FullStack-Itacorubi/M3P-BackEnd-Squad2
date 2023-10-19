@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity(name = "addresses")
-@Table(name = "tb_addresses")
+@Table(name = "addresses")
 @Data
 public class Address {
 
