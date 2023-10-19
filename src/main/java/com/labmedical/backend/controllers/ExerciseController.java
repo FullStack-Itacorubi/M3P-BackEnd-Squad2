@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,11 +28,11 @@ public class ExerciseController {
 
     @PostMapping
     public ResponseEntity<ResponseExerciseDTO> createExercise(
+
             @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
             @RequestParam Long patientId
     ) {
         return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")
@@ -54,6 +55,7 @@ public class ExerciseController {
         exerciseService.deleteExerciseById(id);
 
     }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -83,4 +85,6 @@ public class ExerciseController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exercise not found at the database");
     }
+
 }
+

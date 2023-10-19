@@ -40,6 +40,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         return exerciseMapper
                 .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
+
     }
 
     @Override
@@ -48,6 +49,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         if (exerciseOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
+
         Long patientId = exerciseOptional.get().getPatient().getId();
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
@@ -80,9 +82,6 @@ public class ExerciseServiceImpl implements ExerciseService {
             exerciseRepository.delete(exerciseOptional.get());
         }
     }
-    public ResponseExerciseDTO createExercise(RequestExerciseDTO requestExerciseDTO) {
-        Exercise exerciseToSave = exerciseMapper.map(requestExerciseDTO);
-        return exerciseMapper
-                .mapToResponseExerciseDTO(exerciseRepository.save(exerciseToSave));
-    }
+
 }
+
