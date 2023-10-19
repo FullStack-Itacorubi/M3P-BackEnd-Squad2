@@ -6,11 +6,13 @@ import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
 
 public interface DietService {
 
-    PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO);
+
+    PostResponseDietDTO createDiet(PostRequestDietDTO postRequestDietDTO, Long patientId);
 
     PostResponseDietDTO updateDiet(Long id, PostRequestDietDTO postRequestDietDTO);
 
     GetResponseDietDTO findDietById(Long id);
 
     void deleteDietById(Long id);
+
 }

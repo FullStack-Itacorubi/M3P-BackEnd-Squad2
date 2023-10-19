@@ -1,12 +1,11 @@
 package com.labmedical.backend.controllers;
 
-
-import com.labmedical.backend.dtos.diets.GetResponseDietDTO;
-import com.labmedical.backend.dtos.diets.PostRequestDietDTO;
-import com.labmedical.backend.dtos.diets.PostResponseDietDTO;
-
-import com.labmedical.backend.mappers.DietMapper;
-import com.labmedical.backend.services.DietService;
+import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
+import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
+import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
+import com.labmedical.backend.mappers.ExamMapper;
+import com.labmedical.backend.services.ExamServiceImpl;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -21,46 +20,51 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("dietas")
-public class DietController {
+@RequestMapping("/exames")
+public class ExamController {
 
     @Autowired
-    private DietService dietService;
+    private ExamServiceImpl examService;
 
     @Autowired
-    private DietMapper dietMapper;
+    private ExamMapper examMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseDietDTO> createDiet(
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO
-            , @RequestParam Long patientId
+    public ResponseEntity<PostResponseExamDTO> createExam(
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO,
+            @RequestParam Long patientId
     ) {
-            return new ResponseEntity<>(dietService.createDiet(postRequestDietDTO
-                    , patientId
-            ) ,HttpStatus.CREATED);
-      }
+
+        return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
+
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDietDTO> updateDiet(
+    public ResponseEntity<PostResponseExamDTO> updateExam(
             @PathVariable Long id,
-            @Validated @RequestBody PostRequestDietDTO postRequestDietDTO) {
-        return new ResponseEntity<>(dietService.updateDiet(id, postRequestDietDTO), HttpStatus.OK);
+            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
+        return new ResponseEntity<>(examService.updateExam(id, postRequestExamDTO), HttpStatus.OK);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetResponseDietDTO> getDietById(@PathVariable Long id){
-        return new ResponseEntity<>(dietService.findDietById(id), HttpStatus.OK);
+    public ResponseEntity<GetResponseExamDTO> getExamById(@PathVariable Long id){
+        return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetResponseExamDTO>> getExamsByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(examService.findAllByName(patientName), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteDietById(@PathVariable Long id){
+    public void deleteExamById(@PathVariable Long id){
 
-        dietService.deleteDietById(id);
+        examService.deleteExamById(id);
 
     }
-
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -97,9 +101,7 @@ public class DietController {
             String errorMessage = errorCause.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diet not found at the database");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found at the database");
     }
-
-
 
 }
