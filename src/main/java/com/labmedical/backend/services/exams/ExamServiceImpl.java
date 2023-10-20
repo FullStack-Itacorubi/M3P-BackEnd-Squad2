@@ -1,8 +1,7 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.exams;
 
-import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
-import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
-import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
+import com.labmedical.backend.dtos.exams.RequestExamDTO;
+import com.labmedical.backend.dtos.exams.ResponseExamDTO;
 import com.labmedical.backend.entities.Exam;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.ExamMapper;
@@ -30,22 +29,22 @@ public class ExamServiceImpl implements ExamService {
     private PatientRepository patientRepository;
 
     @Override
-    public PostResponseExamDTO createExam(PostRequestExamDTO postRequestExamDTO, Long patientId) {
+    public ResponseExamDTO createExam(RequestExamDTO requestExamDTO, Long patientId) {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
         if(patientOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-        Exam examToSave = examMapper.map(postRequestExamDTO);
+        Exam examToSave = examMapper.map(requestExamDTO);
         examToSave.setPatient(patientOptional.get());
 
         return examMapper
-                .mapExamToPostResponseExamDTO(examRepository.save(examToSave));
+                .mapToResponseExamDTO(examRepository.save(examToSave));
 
     }
 
     @Override
-    public PostResponseExamDTO updateExam(Long id, PostRequestExamDTO postRequestExamDTO) {
+    public ResponseExamDTO updateExam(Long id, RequestExamDTO requestExamDTO) {
         Optional<Exam> examOptional = examRepository.findById(id);
         if (examOptional.isEmpty()) {
             throw new NoSuchElementException();
@@ -54,23 +53,23 @@ public class ExamServiceImpl implements ExamService {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
         if(patientOptional.isEmpty()){
-            throw new NoSuchElementException();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-        Exam examToUpdate = examMapper.map(postRequestExamDTO);
+        Exam examToUpdate = examMapper.map(requestExamDTO);
         examToUpdate.setPatient(patientOptional.get());
 
         examToUpdate.setId(id);
 
-        return examMapper.mapExamToPostResponseExamDTO(examRepository.save(examToUpdate));
+        return examMapper.mapToResponseExamDTO(examRepository.save(examToUpdate));
     }
 
     @Override
-    public GetResponseExamDTO findExamById(Long id) {
+    public ResponseExamDTO findExamById(Long id) {
         Optional<Exam> examOptional = examRepository.findById(id);
         if (examOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return examMapper.mapExamToGetResponseExamDTO(examOptional.get());
+        return examMapper.mapToResponseExamDTO(examOptional.get());
 
     }
 
@@ -85,7 +84,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<GetResponseExamDTO> findAllByName(String patientName) {
+    public List<ResponseExamDTO> findAllByName(String patientName) {
         if (patientName != null) {
             List<Exam> examList = examRepository.findAllByPatientName(patientName);
             if (examList == null || examList.isEmpty()) {
@@ -94,11 +93,11 @@ public class ExamServiceImpl implements ExamService {
             }
             return examList
                     .stream()
-                    .map(examMapper::mapExamToGetResponseExamDTO).toList();
+                    .map(examMapper::mapToResponseExamDTO).toList();
         }
         return examRepository.findAll()
                 .stream()
-                .map(examMapper::mapExamToGetResponseExamDTO)
+                .map(examMapper::mapToResponseExamDTO)
                 .toList();
     }
 }
