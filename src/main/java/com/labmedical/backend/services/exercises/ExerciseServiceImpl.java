@@ -49,8 +49,15 @@ public class ExerciseServiceImpl implements ExerciseService {
         if (exerciseOptional.isEmpty()) {
             throw new NoSuchElementException();
         }
+        Long patientId = exerciseOptional.get().getPatient().getId();
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+
+        if(patientOptional.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
 
         Exercise exerciseToUpdate = exerciseMapper.map(requestExerciseDTO);
+        exerciseToUpdate.setPatient(patientOptional.get());
         exerciseToUpdate.setId(id);
 
         return exerciseMapper.mapToResponseExerciseDTO(exerciseRepository.save(exerciseToUpdate));
