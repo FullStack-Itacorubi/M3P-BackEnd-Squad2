@@ -1,4 +1,4 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.patients;
 
 import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
 import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
