@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.EnumUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -75,5 +76,13 @@ public class Patient extends Person {
         MARRIED,
         DIVORCED,
         WIDOWED
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validateEnumValues() {
+        if (maritalStatus != null && !EnumUtils.isValidEnum(Patient.MaritalStatus.class, maritalStatus.name())) {
+            throw new IllegalArgumentException("Invalid Diet Type");
+        }
     }
 }
