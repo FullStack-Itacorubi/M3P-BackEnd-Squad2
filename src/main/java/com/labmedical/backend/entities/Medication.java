@@ -42,7 +42,7 @@ public class Medication {
 
     @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
-    private MedicationType type;
+    private MedicationType medicationType;
 
     @NotNull(message = "Quantity is required")
     @Digits(integer = 5, fraction = 2, message = "Quantity must have at least 2 decimal places")
@@ -59,6 +59,11 @@ public class Medication {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
+
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     public enum MedicationType {
         CAPSULE,
@@ -82,7 +87,7 @@ public class Medication {
     @PrePersist
     @PreUpdate
     private void validateEnumValues() {
-        if (type != null && !EnumUtils.isValidEnum(MedicationType.class, type.name())) {
+        if (medicationType != null && !EnumUtils.isValidEnum(MedicationType.class, medicationType.name())) {
             throw new IllegalArgumentException("Invalid Medication Type");
         }
         if (unit != null && !EnumUtils.isValidEnum(Unit.class, unit.name())) {
