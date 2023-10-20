@@ -1,5 +1,8 @@
 package com.labmedical.backend.dtos.patients;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.labmedical.backend.dtos.annotations.MaritalStatusDeserializer;
+import com.labmedical.backend.dtos.annotations.ValidMaritalStatus;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.entities.Person;
@@ -11,40 +14,39 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-public record PutRequestPatientDTO(
+public record RequestPatientDTO(
 
-        Long id,
-
-        @NotBlank(message = "Name is required")
+        @NotBlank(message = "is required")
         String name,
 
-        @NotNull(message = "Gender is required")
+        @NotNull(message = "is required")
         Person.Gender gender,
 
-        @NotBlank(message = "CPF is required")
+        @NotBlank(message = "is required")
         String cpf,
 
         @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid phone number format (e.g., (XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
-        @NotBlank(message = "Phone number is required")
+        @NotBlank(message = "number is required")
         String phone,
 
         @Email(message = "Invalid email address")
-        @NotBlank(message = "Email is required")
+        @NotBlank(message = "is required")
         String email,
 
-        @NotNull(message = "Patient system status is required")
         Boolean status,
 
-        @NotNull(message = "Date of Birth is required")
+        @NotNull(message = "is required")
         LocalDate dateOfBirth,
 
-        @NotBlank(message = "RG is required")
+        @NotBlank(message = "is required")
         String rgWithIssuingAuthority,
 
+        @JsonDeserialize(using = MaritalStatusDeserializer.class)
+        @ValidMaritalStatus
         @NotNull(message = "Marital Status is required")
         Patient.MaritalStatus maritalStatus,
 
-        @NotBlank(message = "Emergency contact number is required")
+        @NotBlank(message = "number is required")
         String emergencyContact,
 
         String allergies,
@@ -60,7 +62,7 @@ public record PutRequestPatientDTO(
         @Column(name = "insurance_validity")
         LocalDate insuranceValidity,
 
-        @NotNull(message = "Address is required")
+        @NotNull(message = "is required")
         Address address
 ) {
 }

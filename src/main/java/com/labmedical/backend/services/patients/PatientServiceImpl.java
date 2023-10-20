@@ -1,9 +1,7 @@
 package com.labmedical.backend.services.patients;
 
-import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
-import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
-import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
-import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
+import com.labmedical.backend.dtos.patients.RequestPatientDTO;
+import com.labmedical.backend.dtos.patients.ResponsePatientDTO;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.AddressMapper;
 import com.labmedical.backend.mappers.PatientMapper;
@@ -34,45 +32,43 @@ public class PatientServiceImpl implements PatientService {
     private AddressMapper addressMapper;
 
 
-    public PostResponsePatientDTO savePatient(PostRequestPatientDTO patient) {
+    public ResponsePatientDTO savePatient(RequestPatientDTO patient) {
         Patient patientToSave = this.patientMapper.map(patient);
         patientToSave.setStatus(true);
 
-        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(patientToSave));
+        return patientMapper.mapToResponsePatientDTO(patientRepository.save(patientToSave));
 
     }
 
-    public List<GetResponsePatientDTO> findAll() {
+    public List<ResponsePatientDTO> findAll() {
         return patientRepository.findAll()
                 .stream()
-                .map(patientMapper::mapToGetResponsePatientDTO)
+                .map(patientMapper::mapToResponsePatientDTO)
                 .toList();
 
     }
 
-    public GetResponsePatientDTO findPatientById(Long id) {
+    public ResponsePatientDTO findPatientById(Long id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
 
         if (patientOptional.isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            return patientMapper.mapToGetResponsePatientDTO(patientOptional.get());
+            return patientMapper.mapToResponsePatientDTO(patientOptional.get());
         }
     }
 
 
-    public PostResponsePatientDTO replacePatientData(Long id, PutRequestPatientDTO patient) {
+    public ResponsePatientDTO replacePatientData(Long id, RequestPatientDTO patient) {
 
         patientMapper.map(findPatientById(id));
         Patient newDataPatient = patientMapper.map(patient);
         newDataPatient.setId(id);
 
-
-        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(newDataPatient));
+        return patientMapper.mapToResponsePatientDTO(patientRepository.save(newDataPatient));
     }
 
     public void deletePatient(Long id) {
-//TODO : exception to not dlete patient with exercise, diet, exam or appointment"
         Patient patientToDelete = patientRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

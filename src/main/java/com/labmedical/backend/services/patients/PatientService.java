@@ -1,22 +1,20 @@
 package com.labmedical.backend.services.patients;
 
-import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
-import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
-import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
-import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
+import com.labmedical.backend.dtos.patients.RequestPatientDTO;
+import com.labmedical.backend.dtos.patients.ResponsePatientDTO;
 
 import java.util.List;
 
 public interface PatientService {
 
-    PostResponsePatientDTO savePatient(PostRequestPatientDTO patient);
+    ResponsePatientDTO savePatient(RequestPatientDTO patient);
 
-    List<GetResponsePatientDTO> findAll();
+    List<ResponsePatientDTO> findAll();
 
-    GetResponsePatientDTO findPatientById(Long id);
+    ResponsePatientDTO findPatientById(Long id);
 
 
-    PostResponsePatientDTO replacePatientData(Long id, PutRequestPatientDTO patient);
+    ResponsePatientDTO replacePatientData(Long id, RequestPatientDTO patient);
 
     void deletePatient(Long id);
 }
