@@ -9,18 +9,12 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.EnumUtils;
 
 @Entity
 @Table(name = "medications")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Medication {
 
     @Id
@@ -32,17 +26,9 @@ public class Medication {
     @Column(name = "medication_name")
     private String medicationName;
 
-    @NotNull(message = "Date is required")
-    @Column(name = "date")
-    private LocalDate date;
-
-    @NotNull(message = "Time is required")
-    @Column(name = "time")
-    private LocalTime time;
-
     @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
-    private MedicationType type;
+    private MedicationType medicationType;
 
     @NotNull(message = "Quantity is required")
     @Digits(integer = 5, fraction = 2, message = "Quantity must have at least 2 decimal places")
@@ -82,7 +68,7 @@ public class Medication {
     @PrePersist
     @PreUpdate
     private void validateEnumValues() {
-        if (type != null && !EnumUtils.isValidEnum(MedicationType.class, type.name())) {
+        if (medicationType != null && !EnumUtils.isValidEnum(MedicationType.class, medicationType.name())) {
             throw new IllegalArgumentException("Invalid Medication Type");
         }
         if (unit != null && !EnumUtils.isValidEnum(Unit.class, unit.name())) {
