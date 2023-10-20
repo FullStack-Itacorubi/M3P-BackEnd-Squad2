@@ -1,12 +1,8 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.patients.GetResponsePatientDTO;
-import com.labmedical.backend.dtos.patients.PostRequestPatientDTO;
-import com.labmedical.backend.dtos.patients.PostResponsePatientDTO;
-import com.labmedical.backend.services.PatientService;
-import jakarta.validation.ConstraintViolationException;
-import com.labmedical.backend.dtos.patients.PutRequestPatientDTO;
-import com.labmedical.backend.services.PatientServiceImpl;
+import com.labmedical.backend.dtos.patients.RequestPatientDTO;
+import com.labmedical.backend.dtos.patients.ResponsePatientDTO;
+import com.labmedical.backend.services.patients.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,29 +23,29 @@ public class PatientController {
     private PatientServiceImpl patientServiceImpl;
 
     @PostMapping
-    public ResponseEntity<PostResponsePatientDTO> savePatient(@Validated @RequestBody PostRequestPatientDTO patient) {
+    public ResponseEntity<ResponsePatientDTO> savePatient(@Validated @RequestBody RequestPatientDTO patient) {
 
             return new ResponseEntity<>(patientServiceImpl.savePatient(patient), HttpStatus.CREATED);
 
     }
 
     @GetMapping
-    public ResponseEntity<List<GetResponsePatientDTO>> listAllPatients() {
+    public ResponseEntity<List<ResponsePatientDTO>> listAllPatients() {
         return ResponseEntity.ok(patientServiceImpl.findAll());
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetResponsePatientDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ResponsePatientDTO> findById(@PathVariable Long id) {
 
         return ResponseEntity.ok(patientServiceImpl.findPatientById(id));
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponsePatientDTO> updatePatient(
+    public ResponseEntity<ResponsePatientDTO> updatePatient(
             @PathVariable Long id,
-            @Validated @RequestBody PutRequestPatientDTO patient
+            @Validated @RequestBody RequestPatientDTO patient
     ) {
 
         return new ResponseEntity<>(patientServiceImpl.replacePatientData(id, patient), HttpStatus.OK);

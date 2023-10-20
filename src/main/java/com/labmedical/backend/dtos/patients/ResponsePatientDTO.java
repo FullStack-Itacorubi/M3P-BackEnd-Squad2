@@ -6,7 +6,7 @@ import com.labmedical.backend.entities.Person;
 
 import java.time.LocalDate;
 
-public record PostResponsePatientDTO(
+public record ResponsePatientDTO(
 
         Long id,
 
