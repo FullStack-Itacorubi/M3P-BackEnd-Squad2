@@ -1,10 +1,10 @@
 package com.labmedical.backend.services.medications;
 
-import com.labmedical.backend.repositories.MedicationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.labmedical.backend.dtos.medications.RequestMedicationDTO;
+import com.labmedical.backend.dtos.medications.ResponseMedicationDTO;
 
 public interface MedicationService {
 
+    ResponseMedicationDTO saveMedication(RequestMedicationDTO requestMedicationDTO);
 
 }

@@ -9,18 +9,12 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.EnumUtils;
 
 @Entity
 @Table(name = "medications")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Medication {
 
     @Id
@@ -31,14 +25,6 @@ public class Medication {
     @Size(min = 5, max = 100, message = "Medication Name must be between 5 and 100 characters")
     @Column(name = "medication_name")
     private String medicationName;
-
-    @NotNull(message = "Date is required")
-    @Column(name = "date")
-    private LocalDate date;
-
-    @NotNull(message = "Time is required")
-    @Column(name = "time")
-    private LocalTime time;
 
     @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
@@ -59,11 +45,6 @@ public class Medication {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
-
-    @NotNull(message = "Patient is required")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 
     public enum MedicationType {
         CAPSULE,
