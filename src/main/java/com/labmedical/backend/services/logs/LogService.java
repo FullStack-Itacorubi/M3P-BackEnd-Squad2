@@ -1,4 +1,4 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.logs;
 
 import java.util.List;
 

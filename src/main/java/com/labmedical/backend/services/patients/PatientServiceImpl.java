@@ -6,7 +6,7 @@ import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.AddressMapper;
 import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.PatientRepository;
-import com.labmedical.backend.services.AddressService;
+import com.labmedical.backend.services.addresses.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

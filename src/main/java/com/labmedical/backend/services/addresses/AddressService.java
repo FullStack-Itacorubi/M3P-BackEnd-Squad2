@@ -1,4 +1,4 @@
-package com.labmedical.backend.services;
+package com.labmedical.backend.services.addresses;
 
 import com.labmedical.backend.dtos.address.RequestAddressDTO;
 import com.labmedical.backend.dtos.address.ResponseAddressDTO;
