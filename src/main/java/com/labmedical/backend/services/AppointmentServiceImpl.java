@@ -8,6 +8,8 @@ import com.labmedical.backend.repositories.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
@@ -19,5 +21,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = AppointmentMapper.INSTANCE.toEntity(requestDTO);
         appointmentRepository.save(appointment);
         return AppointmentMapper.INSTANCE.toDTO(appointment);
+    }
+
+    public boolean deleteAppointment(Long id) {
+        if (id == null) {
+            return false;
+        }
+
+        try {
+            Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
+            if (appointmentOptional.isPresent()) {
+                appointmentRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

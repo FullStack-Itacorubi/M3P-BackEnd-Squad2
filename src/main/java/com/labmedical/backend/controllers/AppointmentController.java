@@ -1,6 +1,7 @@
 package com.labmedical.backend.controllers;
 import com.labmedical.backend.dtos.appointment.AppointmentRequestDTO;
 import com.labmedical.backend.dtos.appointment.AppointmentResponseDTO;
+import com.labmedical.backend.entities.UsersType;
 import com.labmedical.backend.services.AppointmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,6 +26,19 @@ public class AppointmentController {
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CPF or email already exists.");
         } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error: " + ex.getMessage());
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteAppointment(@PathVariable Long id){
+        try {
+            boolean appointmentDeleted = appointmentService.deleteAppointment(id);
+            if (appointmentDeleted) {
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body("Appointment deleted succesfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
+            }
+        }catch (Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error: " + ex.getMessage());
         }
     }
