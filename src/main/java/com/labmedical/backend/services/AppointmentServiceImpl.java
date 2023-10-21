@@ -22,7 +22,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.save(appointment);
         return AppointmentMapper.INSTANCE.toDTO(appointment);
     }
-
+    @Override
     public boolean deleteAppointment(Long id) {
         if (id == null) {
             return false;
@@ -40,4 +40,20 @@ public class AppointmentServiceImpl implements AppointmentService {
             return false;
         }
     }
+
+    @Override
+    public Optional<AppointmentResponseDTO> getAppointmentById(Long id) {
+        try {
+            Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
+            if (appointmentOptional.isPresent()) {
+                AppointmentResponseDTO responseDTO = AppointmentMapper.INSTANCE.toDTO(appointmentOptional.get());
+                return Optional.of(responseDTO);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception ex) {
+            return Optional.empty(); // Error occurred
+        }
+    }
+
 }
