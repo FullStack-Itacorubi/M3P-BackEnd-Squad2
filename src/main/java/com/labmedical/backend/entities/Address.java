@@ -2,7 +2,6 @@ package com.labmedical.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Entity(name = "addresses")
@@ -15,7 +14,6 @@ public class Address {
     private Long id;
 
     @NotBlank(message = "CEP is required")
-    @Pattern(regexp = "\\d{5}-\\d{3}", message = "Invalid CEP format (e.g., 00000-000")
     private String cep;
 
     @NotBlank(message = "City is required")
@@ -36,5 +34,6 @@ public class Address {
     private String district;
 
     private String reference;
+
 
 }

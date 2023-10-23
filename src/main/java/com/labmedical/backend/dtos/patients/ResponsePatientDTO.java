@@ -1,9 +1,10 @@
 package com.labmedical.backend.dtos.patients;
 
-import com.labmedical.backend.entities.*;
+import com.labmedical.backend.entities.Address;
+import com.labmedical.backend.entities.Patient;
+import com.labmedical.backend.entities.Person;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record ResponsePatientDTO(
 

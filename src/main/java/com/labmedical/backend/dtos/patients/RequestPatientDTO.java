@@ -9,7 +9,6 @@ import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.entities.Person;
 import jakarta.persistence.Column;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -72,7 +71,6 @@ public record RequestPatientDTO(
         LocalDate insuranceValidity,
 
         @NotNull(message = "Patient Address is required")
-        @Valid
         Address address
 ) {
 }
