@@ -1,44 +1,53 @@
 package com.labmedical.backend.dtos.patients;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.labmedical.backend.dtos.annotations.MaritalStatusDeserializer;
-import com.labmedical.backend.dtos.annotations.ValidMaritalStatus;
+import com.labmedical.backend.dtos.annotations.gender.GenderDeserializer;
+import com.labmedical.backend.dtos.annotations.gender.ValidGender;
+import com.labmedical.backend.dtos.annotations.marital_status.MaritalStatusDeserializer;
+import com.labmedical.backend.dtos.annotations.marital_status.ValidMaritalStatus;
 import com.labmedical.backend.entities.Address;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.entities.Person;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 public record RequestPatientDTO(
 
-        @NotBlank(message = "is required")
+        @NotBlank(message = "Patient name is required")
+        @Size(max = 64, message = "Patient name cannot exceed 64 characters")
+        @Size(min = 8, message = "Patient name must be at least 8 characters")
         String name,
 
-        @NotNull(message = "is required")
+        @JsonDeserialize(using = GenderDeserializer.class)
+        @ValidGender
+        @NotNull(message = "Patient gender is required")
         Person.Gender gender,
 
-        @NotBlank(message = "is required")
+        @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "Invalid CPF format, (e.g., \"XXX.XXX" +
+                ".XXX-XX\")")
+        @NotBlank(message = "CPF is required")
         String cpf,
 
-        @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid phone number format (e.g., (XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
-        @NotBlank(message = "number is required")
+        @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid phone number format (e.g., " +
+                "(XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
+        @NotBlank(message = "Patient Phone number is required")
         String phone,
 
-        @Email(message = "Invalid email address")
-        @NotBlank(message = "is required")
+        @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*" +
+                "(\\.[A-Za-z]{2,})$", message = "Invalid e-mail address format (e.g., username@domain.com)")
+        @NotBlank(message = "Patient e-mail address is required")
         String email,
 
         Boolean status,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Date of Birth is required")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate dateOfBirth,
 
-        @NotBlank(message = "is required")
+        @NotBlank(message = "Rg with issuing authority is required")
         String rgWithIssuingAuthority,
 
         @JsonDeserialize(using = MaritalStatusDeserializer.class)
@@ -46,23 +55,22 @@ public record RequestPatientDTO(
         @NotNull(message = "Marital Status is required")
         Patient.MaritalStatus maritalStatus,
 
-        @NotBlank(message = "number is required")
+        @Pattern(regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}", message = "Invalid Emergency Contact phone number " +
+                "format (e.g., (XX) XXXX-XXXX or (XX) XXXXX-XXXX)")
+        @NotBlank(message = "Emergency Contact number is required")
         String emergencyContact,
 
         String allergies,
 
-        @Column(name = "specific_care")
         String specificCare,
 
         String insurance,
 
-        @Column(name = "insurance_number")
         String insuranceNumber,
 
-        @Column(name = "insurance_validity")
         LocalDate insuranceValidity,
 
-        @NotNull(message = "is required")
+        @NotNull(message = "Patient Address is required")
         Address address
 ) {
 }

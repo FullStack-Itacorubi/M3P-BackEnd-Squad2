@@ -79,7 +79,7 @@ public class Patient extends Person {
     @PreUpdate
     private void validateEnumValues() {
         if (maritalStatus != null && !EnumUtils.isValidEnum(Patient.MaritalStatus.class, maritalStatus.name())) {
-            throw new IllegalArgumentException("Invalid Diet Type");
+            throw new IllegalArgumentException("Invalid Marital Status");
         }
     }
 }
