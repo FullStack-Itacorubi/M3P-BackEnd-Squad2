@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -55,7 +56,6 @@ public class Patient extends Person {
 
     @NotNull(message = "Address is required")
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -67,10 +67,15 @@ public class Patient extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exercise> exerciseList;
 
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Appointment> appointment;
+
     public enum MaritalStatus {
         SINGLE,
         MARRIED,
         DIVORCED,
         WIDOWED
     }
+
 }
