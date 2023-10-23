@@ -33,7 +33,6 @@ public record CreateUsersRequestDTO(
         UsersType type,
         @NotNull
         boolean systemStatus
-
 ) {
 
 }
