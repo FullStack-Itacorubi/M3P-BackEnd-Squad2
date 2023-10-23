@@ -6,7 +6,7 @@ import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.AddressMapper;
 import com.labmedical.backend.mappers.PatientMapper;
 import com.labmedical.backend.repositories.PatientRepository;
-import com.labmedical.backend.services.addresses.AddressService;
+import com.labmedical.backend.services.addresses.AddressServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private AddressService addressService;
+    private AddressServiceImpl addressServiceImpl;
 
     @Autowired
     private PatientMapper patientMapper;
@@ -37,7 +37,6 @@ public class PatientServiceImpl implements PatientService {
         patientToSave.setStatus(true);
 
         return patientMapper.mapToResponsePatientDTO(patientRepository.save(patientToSave));
-
     }
 
     public List<ResponsePatientDTO> findAll() {
@@ -64,6 +63,9 @@ public class PatientServiceImpl implements PatientService {
         patientMapper.map(findPatientById(id));
         Patient newDataPatient = patientMapper.map(patient);
         newDataPatient.setId(id);
+
+        Long addressId = addressServiceImpl.findAddresById(newDataPatient.getId()).id();
+        newDataPatient.getAddress().setId(addressId);
 
         return patientMapper.mapToResponsePatientDTO(patientRepository.save(newDataPatient));
     }
