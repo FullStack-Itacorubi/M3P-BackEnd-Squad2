@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,7 +25,7 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<ResponsePatientDTO> savePatient(@Validated @RequestBody RequestPatientDTO patient) {
 
-        return new ResponseEntity<>(patientServiceImpl.savePatient(patient), HttpStatus.CREATED);
+            return new ResponseEntity<>(patientServiceImpl.savePatient(patient), HttpStatus.CREATED);
 
     }
 
@@ -49,7 +48,7 @@ public class PatientController {
             @Validated @RequestBody RequestPatientDTO patient
     ) {
 
-        return new ResponseEntity<>(patientServiceImpl.updatePatientData(id, patient), HttpStatus.OK);
+        return new ResponseEntity<>(patientServiceImpl.replacePatientData(id, patient), HttpStatus.OK);
 
     }
 
@@ -61,35 +60,24 @@ public class PatientController {
 
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errorMessages = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(fieldError -> fieldError.getField() + " : " + fieldError.getDefaultMessage())
+                .map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage())
                 .toList();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-
-//        Throwable mostSpecificCause = ex.getMostSpecificCause();
-//
-//        String errorMessage = mostSpecificCause.getMessage();
-//        String msg = ex.getLocalizedMessage();
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-
         Throwable mostSpecificCause = ex.getMostSpecificCause();
 
-        if (mostSpecificCause instanceof DateTimeParseException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All dates need to be in format " +
-                    "\"yyyy-MM-dddd\"");
-        }
         String errorMessage = mostSpecificCause.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         Throwable mostSpecificCause = ex.getMostSpecificCause();
@@ -107,6 +95,5 @@ public class PatientController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found at the database");
     }
-
 
 }

@@ -59,7 +59,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-    public ResponsePatientDTO updatePatientData(Long id, RequestPatientDTO patient) {
+    public ResponsePatientDTO replacePatientData(Long id, RequestPatientDTO patient) {
 
         patientMapper.map(findPatientById(id));
         Patient newDataPatient = patientMapper.map(patient);

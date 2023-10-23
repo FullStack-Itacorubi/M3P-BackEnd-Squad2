@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -45,13 +44,5 @@ public abstract class Person {
         MALE,
         FEMALE,
         OTHER
-    }
-
-    @PrePersist
-    @PreUpdate
-    private void validateEnumValues() {
-        if (gender != null && !EnumUtils.isValidEnum(Person.Gender.class, gender.name())) {
-            throw new IllegalArgumentException("Invalid Gender");
-        }
     }
 }
