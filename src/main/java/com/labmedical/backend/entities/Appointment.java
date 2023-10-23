@@ -43,7 +43,7 @@ public class Appointment {
     @Size(min = 16, max = 1024, message = "Problem description must be between 16 and 1024 characters")
     private String problemDescription;
 
-    private Boolean medicationPrescribed;
+    private Boolean medicationPrescribed = false;
 
     @NotBlank(message = "Dosage and precautions is required")
     @Size(min = 16, max = 256, message = "Dosage and precautions must be between 16 and 256 characters")

@@ -36,20 +36,20 @@ public class PatientServiceImpl implements PatientService {
         Patient patientToSave = this.patientMapper.map(patient);
         patientToSave.setStatus(true);
 
-        return patientMapper.mapToResponsePatientDTO(patientRepository.save(patientToSave));
+        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(patientToSave));
+
     }
 
     public List<ResponsePatientDTO> findAll() {
         return patientRepository.findAll()
                 .stream()
-                .map(patientMapper::mapToResponsePatientDTO)
+                .map(patientMapper::mapToGetResponsePatientDTO)
                 .toList();
 
     }
 
     public ResponsePatientDTO findPatientById(Long id) {
-        Optional<Patient> patientOptional = patientRepository.findById(id);
-
+        Optional<Patient> patientOptional = patientRepository.findByIdWithRelatedData(id);
         if (patientOptional.isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -67,10 +67,11 @@ public class PatientServiceImpl implements PatientService {
         Long addressId = addressServiceImpl.findAddresById(newDataPatient.getId()).id();
         newDataPatient.getAddress().setId(addressId);
 
-        return patientMapper.mapToResponsePatientDTO(patientRepository.save(newDataPatient));
+        return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(newDataPatient));
     }
 
     public void deletePatient(Long id) {
+//TODO : exception to not dlete patient with exercise, diet, exam or appointment"
         Patient patientToDelete = patientRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

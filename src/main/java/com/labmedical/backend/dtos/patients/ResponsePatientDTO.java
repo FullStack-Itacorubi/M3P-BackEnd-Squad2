@@ -37,7 +37,10 @@ public record ResponsePatientDTO(
         String insuranceNumber,
 
         LocalDate insuranceValidity,
-
-        Address address
+        Address address,
+        List<Exercise> exerciseList,
+        List<Diet> dietList,
+        List<Exam> examList,
+        List<Appointment> appointment
 ) {
 }

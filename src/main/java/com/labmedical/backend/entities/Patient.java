@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -68,18 +68,14 @@ public class Patient extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exercise> exerciseList;
 
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Appointment> appointment;
+
     public enum MaritalStatus {
         SINGLE,
         MARRIED,
         DIVORCED,
         WIDOWED
-    }
-
-    @PrePersist
-    @PreUpdate
-    private void validateEnumValues() {
-        if (maritalStatus != null && !EnumUtils.isValidEnum(Patient.MaritalStatus.class, maritalStatus.name())) {
-            throw new IllegalArgumentException("Invalid Marital Status");
-        }
     }
 }
