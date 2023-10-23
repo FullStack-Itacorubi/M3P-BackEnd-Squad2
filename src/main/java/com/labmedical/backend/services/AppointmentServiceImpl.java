@@ -2,6 +2,7 @@ package com.labmedical.backend.services;
 
 import com.labmedical.backend.dtos.appointment.AppointmentRequestDTO;
 import com.labmedical.backend.dtos.appointment.AppointmentResponseDTO;
+import com.labmedical.backend.dtos.appointment.UpdateAppointmentRequestDTO;
 import com.labmedical.backend.entities.Appointment;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.AppointmentMapper;
@@ -90,4 +91,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .map(AppointmentMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public void updateAppointment(Appointment existingAppointment, UpdateAppointmentRequestDTO updateAppointmentRequest) {
+        AppointmentMapper.INSTANCE.updateAppointmentRequestDTOToAppointment(updateAppointmentRequest, existingAppointment);
+        appointmentRepository.save(existingAppointment);
+    }
+
 }
