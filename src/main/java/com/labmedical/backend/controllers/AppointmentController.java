@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -53,6 +54,22 @@ public class AppointmentController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
             }
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error: " + ex.getMessage());
+        }
+    }
+    @GetMapping
+    public ResponseEntity<Object> getAppointmentsByPatient(@RequestParam(name = "patientId", required = false) Long patientId) {
+        try {
+            List<AppointmentResponseDTO> response;
+            if (patientId != null) {
+                response = appointmentService.getAppointmentsByPatient(patientId);
+            } else {
+                response = appointmentService.getAllAppointments();
+            }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid patient ID.");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error: " + ex.getMessage());
         }

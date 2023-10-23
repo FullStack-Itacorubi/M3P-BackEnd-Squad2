@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record AppointmentRequestDTO(
+        @NotNull (message="Patient Id is required") Long patientId,
         @NotBlank(message = "Reason is required")
         @Size(min = 8) String reason,
         @NotNull(message = "Consultation date is required") LocalDate consultationDate,
@@ -17,6 +18,7 @@ public record AppointmentRequestDTO(
         Boolean medicationPrescribed,
         @Size(min = 16, max = 256) String dosageAndPrecautions,
         @NotNull (message="Status is required") Boolean systemStatus
+
 ) {
 }
 

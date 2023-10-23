@@ -1,9 +1,7 @@
 package com.labmedical.backend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,6 +23,11 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @NotBlank(message = "Reason is required")
     @Size(min = 8, message = "Reason must have at least 8 characters")

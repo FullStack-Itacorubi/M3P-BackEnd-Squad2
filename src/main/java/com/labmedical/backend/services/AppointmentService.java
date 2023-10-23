@@ -12,5 +12,9 @@ public interface AppointmentService {
     boolean deleteAppointment(Long id);
 
     Optional<AppointmentResponseDTO> getAppointmentById(Long id);
+
+    List<AppointmentResponseDTO> getAppointmentsByPatient(Long patientId);
+
+    List<AppointmentResponseDTO> getAllAppointments();
 }
 
