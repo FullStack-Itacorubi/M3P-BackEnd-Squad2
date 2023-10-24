@@ -43,6 +43,11 @@ public class MedicationController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseMedicationDTO> getMedicationById(@PathVariable Long id){
+        return new ResponseEntity<>(medicationService.findMedicationById(id), HttpStatus.OK);
+    }
+
 
 
 
