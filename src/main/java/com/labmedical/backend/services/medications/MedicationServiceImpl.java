@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -69,5 +70,23 @@ public class MedicationServiceImpl implements MedicationService {
             throw new NoSuchElementException();
         }
         return medicationMapper.mapToResponseMedicationDTO(medicationOptional.get());
+    }
+
+    @Override
+    public List<ResponseMedicationDTO> findAllByName(String patientName) {
+        if (patientName != null) {
+            List<Medication> medicationList = medicationRepository.findAllByPatientName(patientName);
+            if (medicationList == null || medicationList.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, patientName +
+                        " has no exams");
+            }
+            return medicationList
+                    .stream()
+                    .map(medicationMapper::mapToResponseMedicationDTO).toList();
+        }
+        return medicationRepository.findAll()
+                .stream()
+                .map(medicationMapper::mapToResponseMedicationDTO)
+                .toList();
     }
 }
