@@ -1,13 +1,10 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.exams.GetResponseExamDTO;
-import com.labmedical.backend.dtos.exams.PostRequestExamDTO;
-import com.labmedical.backend.dtos.exams.PostResponseExamDTO;
+import com.labmedical.backend.dtos.exams.RequestExamDTO;
+import com.labmedical.backend.dtos.exams.ResponseExamDTO;
 import com.labmedical.backend.mappers.ExamMapper;
-import com.labmedical.backend.services.ExamServiceImpl;
-import jakarta.websocket.server.PathParam;
+import com.labmedical.backend.services.exams.ExamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -30,30 +27,30 @@ public class ExamController {
     private ExamMapper examMapper;
 
     @PostMapping
-    public ResponseEntity<PostResponseExamDTO> createExam(
-            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO,
+    public ResponseEntity<ResponseExamDTO> createExam(
+            @Validated @RequestBody RequestExamDTO requestExamDTO,
             @RequestParam Long patientId
     ) {
 
-        return new ResponseEntity<>(examService.createExam(postRequestExamDTO, patientId), HttpStatus.CREATED);
+        return new ResponseEntity<>(examService.createExam(requestExamDTO, patientId), HttpStatus.CREATED);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseExamDTO> updateExam(
+    public ResponseEntity<ResponseExamDTO> updateExam(
             @PathVariable Long id,
-            @Validated @RequestBody PostRequestExamDTO postRequestExamDTO) {
-        return new ResponseEntity<>(examService.updateExam(id, postRequestExamDTO), HttpStatus.OK);
+            @Validated @RequestBody RequestExamDTO requestExamDTO) {
+        return new ResponseEntity<>(examService.updateExam(id, requestExamDTO), HttpStatus.OK);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetResponseExamDTO> getExamById(@PathVariable Long id){
+    public ResponseEntity<ResponseExamDTO> getExamById(@PathVariable Long id){
         return new ResponseEntity<>(examService.findExamById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<GetResponseExamDTO>> getExamsByPatientName(
+    public ResponseEntity<List<ResponseExamDTO>> getExamsByPatientName(
             @RequestParam(required = false, name = "patientName") String patientName) {
         return new ResponseEntity<>(examService.findAllByName(patientName), HttpStatus.OK);
     }

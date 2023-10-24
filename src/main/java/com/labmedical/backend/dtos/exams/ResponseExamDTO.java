@@ -1,7 +1,6 @@
 package com.labmedical.backend.dtos.exams;
 
 import com.labmedical.backend.entities.Patient;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,7 +9,10 @@ import org.hibernate.validator.constraints.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record PostRequestExamDTO(
+public record ResponseExamDTO(
+
+        Long id,
+
         @NotBlank(message = "is required")
         @Size(min = 8, max = 64, message = "must be between 8 and 64 characters")
         String name,
@@ -25,7 +27,7 @@ public record PostRequestExamDTO(
         @Size(min = 4, max = 32, message = "must be between 4 and 32 characters")
         String examType,
 
-        @NotBlank(message = "name is required")
+        @NotBlank(message = "Laboratory Name is required")
         @Size(min = 4, max = 32, message = "name must be between 4 and 32 characters")
         String laboratory,
 
@@ -36,9 +38,10 @@ public record PostRequestExamDTO(
         @Size(min = 16, max = 1024, message = "must be between 16 and 1024 characters")
         String results,
 
+        @NotNull
+        Patient patient,
 
         @NotNull(message = "is required")
         Boolean systemStatus
-
 ) {
 }

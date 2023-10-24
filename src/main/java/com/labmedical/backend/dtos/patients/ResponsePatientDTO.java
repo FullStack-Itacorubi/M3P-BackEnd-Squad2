@@ -1,12 +1,11 @@
 package com.labmedical.backend.dtos.patients;
 
-import com.labmedical.backend.entities.Address;
-import com.labmedical.backend.entities.Patient;
-import com.labmedical.backend.entities.Person;
+import com.labmedical.backend.entities.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public record PostResponsePatientDTO(
+public record ResponsePatientDTO(
 
         Long id,
 
@@ -38,7 +37,10 @@ public record PostResponsePatientDTO(
         String insuranceNumber,
 
         LocalDate insuranceValidity,
-
-        Address address
+        Address address,
+        List<Exercise> exerciseList,
+        List<Diet> dietList,
+        List<Exam> examList,
+        List<Appointment> appointment
 ) {
 }

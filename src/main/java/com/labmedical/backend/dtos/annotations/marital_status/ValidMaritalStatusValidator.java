@@ -1,4 +1,4 @@
-package com.labmedical.backend.dtos.annotations;
+package com.labmedical.backend.dtos.annotations.marital_status;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

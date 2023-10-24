@@ -1,9 +1,9 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.exercises.RequestExerciseDTO;
-import com.labmedical.backend.dtos.exercises.ResponseExerciseDTO;
-import com.labmedical.backend.mappers.ExerciseMapper;
-import com.labmedical.backend.services.exercises.ExerciseService;
+import com.labmedical.backend.dtos.medications.RequestMedicationDTO;
+import com.labmedical.backend.dtos.medications.ResponseMedicationDTO;
+import com.labmedical.backend.mappers.MedicationMapper;
+import com.labmedical.backend.services.medications.MedicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,50 +16,25 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("exercicios")
-public class ExerciseController {
+@RequestMapping("medicamentos")
+public class MedicationController {
 
     @Autowired
-    private ExerciseService exerciseService;
+    private MedicationService medicationService;
 
     @Autowired
-    private ExerciseMapper exerciseMapper;
+    private MedicationMapper medicationMapper;
 
     @PostMapping
-    public ResponseEntity<ResponseExerciseDTO> createExercise(
-            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO,
-            @RequestParam Long patientId
+    public ResponseEntity<ResponseMedicationDTO > createMedication(
+            @Validated @RequestBody RequestMedicationDTO requestMedicationDTO
+            , @RequestParam Long patientId
     ) {
-        return new ResponseEntity<>(exerciseService.createExercise(requestExerciseDTO, patientId), HttpStatus.CREATED);
+            return new ResponseEntity<>(medicationService.saveMedication(requestMedicationDTO
+                    , patientId) ,HttpStatus.CREATED);
+      }
 
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseExerciseDTO> updateExercise(
-            @PathVariable Long id,
-            @Validated @RequestBody RequestExerciseDTO requestExerciseDTO) {
-        return new ResponseEntity<>(exerciseService.updateExercise(id, requestExerciseDTO), HttpStatus.OK);
-
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ResponseExerciseDTO>> getExercisesByPatientName(
-            @RequestParam(required = false, name = "patientName") String patientName) {
-        return new ResponseEntity<>(exerciseService.findAllByName(patientName), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseExerciseDTO> getExexerciseById(@PathVariable Long id){
-        return new ResponseEntity<>(exerciseService.findExerciseById(id), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteExerciseById(@PathVariable Long id){
-
-        exerciseService.deleteExerciseById(id);
-
-    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -87,6 +62,7 @@ public class ExerciseController {
             String errorMessage = errorCause.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exercise not found at the database");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medication not found at the database");
     }
+
 }

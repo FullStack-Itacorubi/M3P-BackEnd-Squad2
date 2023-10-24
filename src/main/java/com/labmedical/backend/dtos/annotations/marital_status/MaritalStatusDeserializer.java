@@ -1,4 +1,4 @@
-package com.labmedical.backend.dtos.annotations;
+package com.labmedical.backend.dtos.annotations.marital_status;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -16,7 +16,8 @@ public class MaritalStatusDeserializer extends JsonDeserializer<Patient.MaritalS
         try {
             return Patient.MaritalStatus.valueOf(maritalStatus);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid marital status: " + maritalStatus);
+            throw new IllegalArgumentException("Invalid marital status: " + maritalStatus + ". It need to be: " +
+                    "\"SINGLE\", \"MARRIED\", \"DIVORCED\" or \"WIDOWED\"");
         }
     }
 }

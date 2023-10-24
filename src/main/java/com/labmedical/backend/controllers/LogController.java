@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labmedical.backend.dtos.logs.ResponseLogDTO;
-import com.labmedical.backend.services.LogService;
+import com.labmedical.backend.services.logs.LogService;
 
 @RestController
 @RequestMapping("logs")

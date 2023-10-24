@@ -5,6 +5,6 @@ import com.labmedical.backend.dtos.medications.ResponseMedicationDTO;
 
 public interface MedicationService {
 
-    ResponseMedicationDTO saveMedication(RequestMedicationDTO requestMedicationDTO);
+    ResponseMedicationDTO saveMedication(RequestMedicationDTO requestMedicationDTO, Long patientId);
 
 }

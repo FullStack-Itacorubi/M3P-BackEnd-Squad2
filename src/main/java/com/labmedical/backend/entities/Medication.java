@@ -46,6 +46,11 @@ public class Medication {
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
     public enum MedicationType {
         CAPSULE,
         TABLET,
@@ -68,11 +73,11 @@ public class Medication {
     @PrePersist
     @PreUpdate
     private void validateEnumValues() {
-        if (medicationType != null && !EnumUtils.isValidEnum(MedicationType.class, medicationType.name())) {
+        if (medicationType != null && !EnumUtils.isValidEnum(Medication.MedicationType.class, medicationType.name())) {
             throw new IllegalArgumentException("Invalid Medication Type");
         }
-        if (unit != null && !EnumUtils.isValidEnum(Unit.class, unit.name())) {
-            throw new IllegalArgumentException("Invalid Unit");
+        if (unit != null && !EnumUtils.isValidEnum(Medication.Unit.class, unit.name())) {
+            throw new IllegalArgumentException("Invalid Medication Unit");
         }
     }
 
