@@ -35,6 +35,15 @@ public class MedicationController {
       }
 
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseMedicationDTO> updateMedication(
+            @PathVariable Long id,
+            @Validated @RequestBody RequestMedicationDTO requestMedicationDTO) {
+        return new ResponseEntity<>(medicationService.updateMedication(id, requestMedicationDTO), HttpStatus.OK);
+
+    }
+
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -7,4 +7,5 @@ public interface MedicationService {
 
     ResponseMedicationDTO saveMedication(RequestMedicationDTO requestMedicationDTO, Long patientId);
 
+    ResponseMedicationDTO updateMedication(Long id, RequestMedicationDTO requestMedicationDTO);
 }
