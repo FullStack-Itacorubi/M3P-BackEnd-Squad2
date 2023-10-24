@@ -68,6 +68,9 @@ public class Patient extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exercise> exerciseList;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Medication> medicationList;
+
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Appointment> appointment;
