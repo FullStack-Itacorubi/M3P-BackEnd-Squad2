@@ -2,7 +2,6 @@ package com.labmedical.backend.services.medications;
 
 import com.labmedical.backend.dtos.medications.RequestMedicationDTO;
 import com.labmedical.backend.dtos.medications.ResponseMedicationDTO;
-import com.labmedical.backend.entities.Exercise;
 import com.labmedical.backend.entities.Medication;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.MedicationMapper;
@@ -61,5 +60,14 @@ public class MedicationServiceImpl implements MedicationService {
         medicationToUpdate.setId(id);
 
         return medicationMapper.mapToResponseMedicationDTO(medicationRepository.save(medicationToUpdate));
+    }
+
+    @Override
+    public ResponseMedicationDTO findMedicationById(Long id) {
+        Optional<Medication> medicationOptional = medicationRepository.findById(id);
+        if (medicationOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return medicationMapper.mapToResponseMedicationDTO(medicationOptional.get());
     }
 }
