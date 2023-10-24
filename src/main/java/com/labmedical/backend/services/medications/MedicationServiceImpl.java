@@ -2,6 +2,7 @@ package com.labmedical.backend.services.medications;
 
 import com.labmedical.backend.dtos.medications.RequestMedicationDTO;
 import com.labmedical.backend.dtos.medications.ResponseMedicationDTO;
+import com.labmedical.backend.entities.Exercise;
 import com.labmedical.backend.entities.Medication;
 import com.labmedical.backend.entities.Patient;
 import com.labmedical.backend.mappers.MedicationMapper;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -39,5 +41,25 @@ public class MedicationServiceImpl implements MedicationService {
 
         return medicationMapper
                 .mapToResponseMedicationDTO(medicationRepository.save(medicationToSave));
+    }
+
+    @Override
+    public ResponseMedicationDTO updateMedication(Long id, RequestMedicationDTO requestMedicationDTO) {
+        Optional<Medication> medicationOptional = medicationRepository.findById(id);
+        if (medicationOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Long patientId = medicationOptional.get().getPatient().getId();
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+
+        if(patientOptional.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+
+        Medication medicationToUpdate = medicationMapper.map(requestMedicationDTO);
+        medicationToUpdate.setPatient(patientOptional.get());
+        medicationToUpdate.setId(id);
+
+        return medicationMapper.mapToResponseMedicationDTO(medicationRepository.save(medicationToUpdate));
     }
 }
