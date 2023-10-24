@@ -14,4 +14,6 @@ public interface MedicationService {
     ResponseMedicationDTO findMedicationById(Long id);
 
     List<ResponseMedicationDTO> findAllByName(String patientName);
+
+    void deleteMedicationById(Long id);
 }

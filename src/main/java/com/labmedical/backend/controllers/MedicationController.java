@@ -54,6 +54,14 @@ public class MedicationController {
         return new ResponseEntity<>(medicationService.findAllByName(patientName), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteMedicationById(@PathVariable Long id){
+
+        medicationService.deleteMedicationById(id);
+
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {

@@ -89,4 +89,15 @@ public class MedicationServiceImpl implements MedicationService {
                 .map(medicationMapper::mapToResponseMedicationDTO)
                 .toList();
     }
+
+    @Override
+    public void deleteMedicationById(Long id) {
+        Optional<Medication> medicationOptional = medicationRepository.findById(id);
+        if (medicationOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        }else{
+            medicationRepository.delete(medicationOptional.get());
+        }
+
+    }
 }
