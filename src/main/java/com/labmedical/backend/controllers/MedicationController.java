@@ -48,7 +48,11 @@ public class MedicationController {
         return new ResponseEntity<>(medicationService.findMedicationById(id), HttpStatus.OK);
     }
 
-
+    @GetMapping
+    public ResponseEntity<List<ResponseMedicationDTO>> getMedicationsByPatientName(
+            @RequestParam(required = false, name = "patientName") String patientName) {
+        return new ResponseEntity<>(medicationService.findAllByName(patientName), HttpStatus.OK);
+    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
