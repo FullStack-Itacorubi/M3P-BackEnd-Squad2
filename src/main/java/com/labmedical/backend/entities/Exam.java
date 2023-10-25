@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,12 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @NotBlank(message = "Exam Name is required")
     @Size(min = 8, max = 64, message = "Exam Name must be between 8 and 64 characters")
@@ -55,9 +62,5 @@ public class Exam {
     @Column(name = "system_status")
     private Boolean systemStatus;
 
-    @NotNull(message = "Patient is required")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 
 }

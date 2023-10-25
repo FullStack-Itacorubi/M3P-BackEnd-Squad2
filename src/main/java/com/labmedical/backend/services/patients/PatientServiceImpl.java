@@ -49,7 +49,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     public ResponsePatientDTO findPatientById(Long id) {
-        Optional<Patient> patientOptional = patientRepository.findByIdWithRelatedData(id);
+        Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isEmpty()) {
             throw new NoSuchElementException();
         } else {
