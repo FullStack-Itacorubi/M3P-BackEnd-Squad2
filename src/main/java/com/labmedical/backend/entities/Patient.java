@@ -59,20 +59,20 @@ public class Patient extends Person {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Exam> examList;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Diet> dietList;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Exercise> exerciseList;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Medication> medicationList;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Appointment> appointment;
 
     public enum MaritalStatus {

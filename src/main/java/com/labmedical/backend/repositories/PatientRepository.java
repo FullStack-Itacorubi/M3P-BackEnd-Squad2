@@ -18,4 +18,11 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
             "WHERE p.id = :id")
     Optional<Patient> findByIdWithRelatedData(@Param("id") Long id);
 
+    @Query("SELECT DISTINCT p FROM Patient p " +
+            "LEFT JOIN FETCH p.examList exams " +
+            "LEFT JOIN FETCH p.dietList diets " +
+            "LEFT JOIN FETCH p.exerciseList exercises " +
+            "LEFT JOIN FETCH p.appointment appointments " +
+            "WHERE p.name = :name")
+    Optional<Patient> findByName(@Param("name") String name);
 }

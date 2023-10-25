@@ -1,5 +1,6 @@
 package com.labmedical.backend.controllers;
 
+import com.labmedical.backend.dtos.patients.RecordsDTO;
 import com.labmedical.backend.dtos.patients.RequestPatientDTO;
 import com.labmedical.backend.dtos.patients.ResponsePatientDTO;
 import com.labmedical.backend.services.patients.PatientServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,6 +63,9 @@ public class PatientController {
         patientServiceImpl.deletePatient(id);
 
     }
+
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
