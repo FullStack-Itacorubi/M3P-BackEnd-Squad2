@@ -82,7 +82,7 @@ public class PatientServiceImpl implements PatientService {
 
     public RecordsDTO searchRecordsByName(String name) {
         Optional<Patient> patientOptional = patientRepository.findByName(name);
-        if (patientOptional.isEmpty()) {
+        if (patientOptional.isPresent()) {
             throw new NoSuchElementException("Patient not found");
         }
         Patient patient = patientOptional.get();
