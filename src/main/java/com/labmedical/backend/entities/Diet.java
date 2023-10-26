@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,11 @@ public class Diet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
     @NotBlank(message = "Diet Name is required")
     @Size(min = 5, max = 100, message = "Diet Name must be between 5 and 100 characters")
     @Column(name = "diet_name")
@@ -49,11 +55,6 @@ public class Diet {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
-
-    @NotNull(message = "Patient is required")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 
     public enum DietType {
         LOW_CARB,

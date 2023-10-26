@@ -41,25 +41,6 @@ public class PatientServiceImpl implements PatientService {
         return patientMapper.mapToPostResponsePatientDTO(patientRepository.save(patientToSave));
 
     }
-
-    public List<ResponsePatientDTO> findAll() {
-        return patientRepository.findAll()
-                .stream()
-                .map(patientMapper::mapToGetResponsePatientDTO)
-                .toList();
-
-    }
-
-    public ResponsePatientDTO findPatientById(Long id) {
-        Optional<Patient> patientOptional = patientRepository.findByIdWithRelatedData(id);
-        if (patientOptional.isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            return patientMapper.mapToResponsePatientDTO(patientOptional.get());
-        }
-    }
-
-
     public ResponsePatientDTO updatePatientData(Long id, RequestPatientDTO patient) {
 
         patientMapper.map(findPatientById(id));
@@ -76,18 +57,28 @@ public class PatientServiceImpl implements PatientService {
 //TODO : exception to not dlete patient with exercise, diet, exam or appointment"
         Patient patientToDelete = patientRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        patientRepository.delete(patientToDelete);
+        if(patientToDelete.getMedicationList() != null || patientToDelete.getAppointment() != null) {
+            throw new IllegalArgumentException();
+        }else {patientRepository.delete(patientToDelete);}
     }
-
+    public ResponsePatientDTO findPatientById(Long id) {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            return patientMapper.mapToResponsePatientDTO(patientOptional.get());
+        }
+    }
     public RecordsDTO searchRecordsById(Long id) {
-        Optional<Patient> patientOptional = patientRepository.findByIdWithRelatedData(id);
+        Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isEmpty()) {
             throw new NoSuchElementException("Patient not found");
         }
         Patient patient = patientOptional.get();
         return PatientMapper.INSTANCE.mapToRecordsDTO(patient);
-    };
+    }
+
+    ;
 
     public RecordsDTO searchRecordsByName(String name) {
         Optional<Patient> patientOptional = patientRepository.findByName(name);
@@ -96,14 +87,23 @@ public class PatientServiceImpl implements PatientService {
         }
         Patient patient = patientOptional.get();
         return PatientMapper.INSTANCE.mapToRecordsDTO(patient);
-    };
+    }
+
+    ;
+
+    public List<ResponsePatientDTO> findAll() {
+        return patientRepository.findAll()
+                .stream()
+                .map(patientMapper::mapToGetResponsePatientDTO)
+                .toList();
+
+    }
 
     public List<RecordsDTO> listAllProntuarios() {
-        List<Patient> patients = patientRepository.findAll();
-        List<RecordsDTO> records = patients.stream()
-                .map(patient -> patientMapper.mapToRecordsDTO(patient))
-                .collect(Collectors.toList());
-        return records;
+        return patientRepository.findAll()
+                .stream()
+                .map(patientMapper::mapToRecordsDTO)
+                .toList();
     }
 }
 

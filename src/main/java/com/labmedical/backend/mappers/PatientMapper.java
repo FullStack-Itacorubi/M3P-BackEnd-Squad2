@@ -13,13 +13,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface PatientMapper {
     PatientMapper INSTANCE = Mappers.getMapper(PatientMapper.class);
-
     Patient map(RequestPatientDTO source);
-
     Patient map(ResponsePatientDTO source);
-
-    RequestPatientDTO mapToRequestPatientDTO(Patient source);
-
     ResponsePatientDTO mapToResponsePatientDTO(Patient source);
     @Mappings({
             @Mapping(target = "exerciseList", source = "exerciseList"),
@@ -30,6 +25,11 @@ public interface PatientMapper {
     ResponsePatientDTO mapToGetResponsePatientDTO(Patient source);
 
     ResponsePatientDTO mapToPostResponsePatientDTO(Patient source);
-
+    @Mappings({
+            @Mapping(target = "exerciseList", source = "exerciseList"),
+            @Mapping(target = "dietList", source = "dietList"),
+            @Mapping(target = "examList", source = "examList"),
+            @Mapping(target = "appointment", source = "appointment")
+    })
     RecordsDTO mapToRecordsDTO(Patient patient);
 }

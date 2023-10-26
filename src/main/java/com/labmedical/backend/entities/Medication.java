@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,6 +21,12 @@ public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @NotBlank(message = "Medication Name is required")
     @Size(min = 5, max = 100, message = "Medication Name must be between 5 and 100 characters")
@@ -46,10 +53,7 @@ public class Medication {
     @Column(name = "system_status")
     private Boolean systemStatus = true;
 
-    @NotNull(message = "Patient is required")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+
 
     public enum MedicationType {
         CAPSULE,

@@ -1,5 +1,6 @@
 package com.labmedical.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -17,6 +18,11 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @NotBlank(message = "Exercise name is required")
     @Size(min = 5, max = 100, message = "Exersise name must be between 05 and 100 characters")
@@ -49,14 +55,6 @@ public class Exercise {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
-
-    @NotNull(message = "Patient is required")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-
-
-
 
     public enum ExerciseType {
         AEROBIC_RESISTANCE,
