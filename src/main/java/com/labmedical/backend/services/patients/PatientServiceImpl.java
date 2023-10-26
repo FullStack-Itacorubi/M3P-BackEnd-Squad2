@@ -53,12 +53,23 @@ public class PatientServiceImpl implements PatientService {
     }
 
     public void deletePatient(Long id) {
-//TODO : exception to not dlete patient with exercise, diet, exam or appointment"
-        Patient patientToDelete = patientRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(patientToDelete.getMedicationList() != null || patientToDelete.getAppointment() != null) {
-            throw new IllegalArgumentException();
-        }else {patientRepository.delete(patientToDelete);}
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+
+        if (patientOptional.isPresent()) {
+            Patient patientToDelete = patientOptional.get();
+
+            if (patientToDelete.getMedicationList().isEmpty() &&
+                    patientToDelete.getExamList().isEmpty() &&
+                    patientToDelete.getAppointment().isEmpty() &&
+                    patientToDelete.getExerciseList().isEmpty() &&
+                    patientToDelete.getDietList().isEmpty()) {
+                patientRepository.delete(patientToDelete);
+            } else {
+                throw new PatientHasRecordsException("Patient has associated records and cannot be deleted.");
+            }
+        } else {
+            throw new PatientNotFoundException("Patient not found.");
+        }
     }
     public ResponsePatientDTO findPatientById(Long id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
@@ -106,5 +117,19 @@ public class PatientServiceImpl implements PatientService {
                 .map(patientMapper::mapToRecordsDTO)
                 .toList();
     }
+    public class PatientHasRecordsException extends RuntimeException {
+
+        public PatientHasRecordsException(String message) {
+            super(message);
+        }
+    }
+
+    public class PatientNotFoundException extends RuntimeException {
+
+        public PatientNotFoundException(String message) {
+            super(message);
+        }
+    }
+
 }
 

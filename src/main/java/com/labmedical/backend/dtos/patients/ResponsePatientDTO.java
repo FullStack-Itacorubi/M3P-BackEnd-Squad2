@@ -41,6 +41,8 @@ public record ResponsePatientDTO(
         List<Exercise> exerciseList,
         List<Diet> dietList,
         List<Exam> examList,
+        List<Medication> medicationList,
         List<Appointment> appointment
+
 ) {
 }

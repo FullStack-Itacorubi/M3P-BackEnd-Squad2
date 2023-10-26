@@ -20,6 +20,7 @@ public interface PatientMapper {
             @Mapping(target = "exerciseList", source = "exerciseList"),
             @Mapping(target = "dietList", source = "dietList"),
             @Mapping(target = "examList", source = "examList"),
+            @Mapping(target = "medicationList", source = "medicationList"),
             @Mapping(target = "appointment", source = "appointment")
     })
     ResponsePatientDTO mapToGetResponsePatientDTO(Patient source);

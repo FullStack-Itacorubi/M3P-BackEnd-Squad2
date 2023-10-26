@@ -1,6 +1,5 @@
 package com.labmedical.backend.controllers;
 
-import com.labmedical.backend.dtos.patients.RecordsDTO;
 import com.labmedical.backend.dtos.patients.RequestPatientDTO;
 import com.labmedical.backend.dtos.patients.ResponsePatientDTO;
 import com.labmedical.backend.services.patients.PatientServiceImpl;
@@ -58,10 +57,17 @@ public class PatientController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping("/{id}")
-    public void deletePatient(@PathVariable Long id) {
-
-        patientServiceImpl.deletePatient(id);
-
+    public ResponseEntity<?> deletePatient(@PathVariable Long id) {
+        try {
+            patientServiceImpl.deletePatient(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Patient deleted successfully.");
+        } catch (PatientServiceImpl.PatientHasRecordsException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (PatientServiceImpl.PatientNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
     }
 
 
