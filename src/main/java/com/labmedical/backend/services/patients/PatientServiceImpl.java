@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -82,8 +81,10 @@ public class PatientServiceImpl implements PatientService {
 
     public RecordsDTO searchRecordsByName(String name) {
         Optional<Patient> patientOptional = patientRepository.findByName(name);
-        if (patientOptional.isPresent()) {
-            throw new NoSuchElementException("Patient not found");
+        if (patientOptional.isEmpty()) {
+            // Handle the case where the patient is not found, you can return null or some other response
+            // For example, you can return an empty RecordsDTO as a placeholder
+            throw new NoSuchElementException();
         }
         Patient patient = patientOptional.get();
         return PatientMapper.INSTANCE.mapToRecordsDTO(patient);

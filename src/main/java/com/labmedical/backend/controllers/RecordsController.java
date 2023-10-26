@@ -15,43 +15,51 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 public class RecordsController {
 
     @Autowired
     private PatientServiceImpl patientServiceImpl;
-    @Autowired
-    private PatientRepository patientRepository;
 
     @GetMapping("/prontuarios")
     public ResponseEntity<?> listRecords(
             @RequestParam(name = "nomePaciente", required = false) String nomePaciente,
             @RequestParam(name = "idPaciente", required = false) Long idPaciente) {
+        try {
+            RecordsDTO prontuario;
 
-        RecordsDTO prontuario;
-
-        if (nomePaciente != null && idPaciente != null) {
-            ResponsePatientDTO patientById = patientServiceImpl.findPatientById(idPaciente);
-            if (!patientById.name().equals(nomePaciente)) {
-                throw new PatientMismatchException(); // Replace with your custom exception
+            if (nomePaciente != null && idPaciente != null) {
+                ResponsePatientDTO patientById = patientServiceImpl.findPatientById(idPaciente);
+                if (!patientById.name().equals(nomePaciente)) {
+                    throw new PatientMismatchException();
+                }
+            } else if (nomePaciente != null) {
+                prontuario = patientServiceImpl.searchRecordsByName(nomePaciente);
+                return ResponseEntity.status(HttpStatus.OK).body(prontuario);
+            } else if (idPaciente != null) {
+                prontuario = patientServiceImpl.searchRecordsById(idPaciente);
+                return ResponseEntity.status(HttpStatus.OK).body(prontuario);
             }
-        } else if (nomePaciente != null) {
-            prontuario = patientServiceImpl.searchRecordsByName(nomePaciente);
-            return ResponseEntity.status(HttpStatus.OK).body(prontuario);
-
-        } else if (idPaciente != null) {
-            prontuario = patientServiceImpl.searchRecordsById(idPaciente);
-            return ResponseEntity.status(HttpStatus.OK).body(prontuario);
+            List<RecordsDTO> prontuarios = patientServiceImpl.listAllProntuarios();
+            return ResponseEntity.status(HttpStatus.OK).body(prontuarios);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request data");
+        } catch (PatientMismatchException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Patient not found");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
-        List<RecordsDTO>prontuarios = patientServiceImpl.listAllProntuarios();
-        return ResponseEntity.status(HttpStatus.OK).body(prontuarios);
     }
+
     public class PatientMismatchException extends RuntimeException {
 
         public PatientMismatchException() {
             super("Patient ID and name do not match the same record.");
         }
     }
-
 }
+
