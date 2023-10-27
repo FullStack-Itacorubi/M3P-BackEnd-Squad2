@@ -1,25 +1,23 @@
 package com.labmedical.backend.services.logs;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.labmedical.backend.dtos.logs.ResponseLogDTO;
 import com.labmedical.backend.entities.Log;
 import com.labmedical.backend.repositories.LogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Service
-public class LogService {
+import java.util.List;
 
-    @Autowired
-    private LogRepository logRepository;
+public interface LogService {
 
-    public void saveLog(Log log) {
-        this.logRepository.save(log);
-    }
+    void saveLog(Log log);
 
-    public List<ResponseLogDTO> getLogs() {
-        return this.logRepository.findAllByOrderByCreatedAtDesc().stream().map(ResponseLogDTO::new).toList();
-    }
+    List<ResponseLogDTO> getLogs();
+
+    void logUserRecord(String userName, String adminName, String action);
+
+    String logPatientRecord(String userName, String patientName, String action);
+
+    String logEntityRecord(String userName, String patientName, String entityName);
+
 }

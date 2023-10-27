@@ -8,6 +8,7 @@ import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
 import com.labmedical.backend.repositories.UsersRepository;
 
+import com.labmedical.backend.services.logs.LogServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,9 @@ public class UsersServiceImpl implements UsersService {
     public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
+
+    @Autowired
+    private LogServiceImpl logService;
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO request) {
@@ -53,6 +57,7 @@ public class UsersServiceImpl implements UsersService {
             throw new DataIntegrityViolationException("CPF or email already exists.");
         }
         Users savedUser = usersRepository.save(user);
+        logService.logUserRecord(user.getName(), "administrador", "registrado" );
         return savedUser.getId();
     }
 
@@ -64,6 +69,7 @@ public class UsersServiceImpl implements UsersService {
         UsersMapper.INSTANCE.UpdateUsersRequestDTOtoUsers(updateUserRequest, updatedUser);
 
         usersRepository.save(updatedUser);
+        logService.logUserRecord(existingUser.getName(), "administrador", "atualizado" );
 
         return updatedUser.getId();
     }

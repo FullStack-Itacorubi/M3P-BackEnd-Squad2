@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labmedical.backend.dtos.logs.ResponseLogDTO;
-import com.labmedical.backend.services.logs.LogService;
+import com.labmedical.backend.services.logs.LogServiceImpl;
 
 @RestController
 @RequestMapping("logs")
 public class LogController {
 
     @Autowired
-    private LogService logService;
+    private LogServiceImpl logServiceImpl;
 
     @GetMapping
     private ResponseEntity<List<ResponseLogDTO>> listLogs() {
-        return ResponseEntity.ok(this.logService.getLogs());
+        return ResponseEntity.ok(this.logServiceImpl.getLogs());
     }
 }
