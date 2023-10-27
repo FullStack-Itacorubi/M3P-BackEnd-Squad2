@@ -24,10 +24,8 @@ public class Users extends Person {
     @Enumerated(EnumType.STRING)
     private UsersType type;
 
-    @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
-
 
 }
 

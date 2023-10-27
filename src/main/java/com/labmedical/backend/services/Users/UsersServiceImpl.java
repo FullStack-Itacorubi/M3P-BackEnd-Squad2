@@ -52,6 +52,7 @@ public class UsersServiceImpl implements UsersService {
         if (usersRepository.existsByCpfOrEmail(user.getCpf(), user.getEmail())) {
             throw new DataIntegrityViolationException("CPF or email already exists.");
         }
+        user.setSystemStatus(true);
         Users savedUser = usersRepository.save(user);
         return savedUser.getId();
     }
