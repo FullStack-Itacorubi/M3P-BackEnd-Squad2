@@ -32,8 +32,8 @@ public class LogServiceImpl implements LogService{
     public String logPatientRecord(String userName, String patientName, String action){
         return "O paciente " + patientName + "foi " + action + " pelo usuário " + userName;
     }
-     public String logEntityRecord(String userName, String patientName, String entityName){
-        return "O usuário " + userName + " registrou" + userName;
+     public String logEntityRecord(String userName, String patientName, String entityName, String action){
+        return "O usuário " + userName + action + " um(a) " + entityName + " para o(a) paciente "+ patientName ;
     }
 
 }
