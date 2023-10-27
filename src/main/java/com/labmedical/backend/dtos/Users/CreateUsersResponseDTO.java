@@ -9,7 +9,8 @@ public record CreateUsersResponseDTO (
         String email,
         String phone,
         String gender,
-        Boolean status,
+        String password,
+        Boolean systemStatus,
         UsersType type
 ) {
 }
