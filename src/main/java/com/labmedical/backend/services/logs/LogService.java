@@ -18,6 +18,6 @@ public interface LogService {
 
     String logPatientRecord(String userName, String patientName, String action);
 
-    String logEntityRecord(String userName, String patientName, String entityName);
+    String logEntityRecord(String userName, String patientName, String entityName, String action);
 
 }
