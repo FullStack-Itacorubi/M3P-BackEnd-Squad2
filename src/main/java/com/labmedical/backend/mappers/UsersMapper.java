@@ -39,4 +39,6 @@ public interface UsersMapper {
     default Boolean updateStatus(Boolean systemStatus, @Context Users existingUser) {
         return systemStatus != null ? systemStatus : existingUser.getStatus();
     }
+    @Mapping(target = "fullName", source = "name")
+    UserResponseDTO userToUserResponseDTO(Users user);
 }

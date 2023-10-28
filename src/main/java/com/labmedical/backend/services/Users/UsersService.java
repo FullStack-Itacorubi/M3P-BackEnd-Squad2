@@ -11,4 +11,6 @@ public interface UsersService {
   Long createUser(Users user);
 
   Long updateUser(Users existingUser, UpdateUsersRequestDTO updateUserRequest);
+
+  UserResponseDTO getUserById(Long id);
 }

@@ -5,7 +5,7 @@ import com.labmedical.backend.entities.UsersType;
 
 public record CreateUsersResponseDTO (
         Long id,
-        String name,
+        String fullName,
         String email,
         String phone,
         String gender,

@@ -6,6 +6,7 @@ import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
 import com.labmedical.backend.repositories.UsersRepository;
 import com.labmedical.backend.services.Users.UsersServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -90,6 +91,23 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error");
         } catch (Exception ex) {
             ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable Long id) {
+        try {
+            UserResponseDTO user = usersService.getUserById(id);
+
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
         }
     }
