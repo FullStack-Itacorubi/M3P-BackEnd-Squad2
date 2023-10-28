@@ -1,9 +1,6 @@
 package com.labmedical.backend.services.Users;
 
-import com.labmedical.backend.dtos.Users.LoginRequestDTO;
-import com.labmedical.backend.dtos.Users.LoginResponseDTO;
-import com.labmedical.backend.dtos.Users.ResetPasswordRequestDTO;
-import com.labmedical.backend.dtos.Users.UpdateUsersRequestDTO;
+import com.labmedical.backend.dtos.Users.*;
 import com.labmedical.backend.entities.Users;
 import com.labmedical.backend.mappers.UsersMapper;
 import com.labmedical.backend.repositories.UsersRepository;
@@ -66,5 +63,11 @@ public class UsersServiceImpl implements UsersService {
         usersRepository.save(updatedUser);
 
         return updatedUser.getId();
+    }
+    @Override
+    public UserResponseDTO getUserById(Long id) {
+        Users user = usersRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+        return UsersMapper.INSTANCE.userToUserResponseDTO(user);
     }
 }
