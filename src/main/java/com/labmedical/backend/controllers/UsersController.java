@@ -112,6 +112,26 @@ public class UsersController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+        try {
+            Users existingUser = usersRepository.getUserById(id);
+
+            if (existingUser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            usersRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("User deleted successfully");
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: " + ex.getMessage());
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
+        }
+    }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
