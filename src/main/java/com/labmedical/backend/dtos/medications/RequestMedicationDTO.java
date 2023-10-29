@@ -7,12 +7,17 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record RequestMedicationDTO(
 
         @NotBlank(message = "Medication Name is required")
         @Size(min = 5, max = 100, message = "Medication Name must be between 5 and 100 characters")
         String medicationName,
+
+        @NotNull(message = "Medication date is required") LocalDate medicationDate,
+        @NotNull(message = "Medication time is required") LocalTime medicationTime,
 
         @NotNull(message = "Type is required")
         Medication.MedicationType medicationType,
