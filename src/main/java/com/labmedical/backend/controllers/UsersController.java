@@ -56,7 +56,7 @@ public class UsersController {
         {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF or email already exists.");
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()+"Internal Error");
         }
     }
     @PutMapping("/{id}")

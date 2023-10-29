@@ -33,6 +33,12 @@ public class Medication {
     @Column(name = "medication_name")
     private String medicationName;
 
+    @NotNull(message = "Medication date is required")
+    private LocalDate medicationDate;
+
+    @NotNull(message = "Medication time is required")
+    private LocalTime medicationTime;
+
     @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
     private MedicationType medicationType;
@@ -52,8 +58,6 @@ public class Medication {
     @NotNull(message = "System Status is required")
     @Column(name = "system_status")
     private Boolean systemStatus = true;
-
-
 
     public enum MedicationType {
         CAPSULE,

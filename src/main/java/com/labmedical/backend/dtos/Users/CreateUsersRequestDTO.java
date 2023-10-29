@@ -31,7 +31,7 @@ public record CreateUsersRequestDTO(
         @NotNull
         @Enumerated(EnumType.STRING)
         UsersType type,
-        @NotNull
+
         boolean systemStatus
 
 ) {
