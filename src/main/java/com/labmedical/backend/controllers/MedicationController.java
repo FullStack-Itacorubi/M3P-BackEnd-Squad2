@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -90,5 +92,24 @@ public class MedicationController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medication not found at the database");
     }
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Object> handleMissing(MissingServletRequestParameterException ex){
+        Throwable errorCause = ex.getCause();
+        if (errorCause != null) {
+            String errorMessage = errorCause.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing required parameter");
 
+    }
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Object> handleMissing(ResponseStatusException ex){
+        Throwable errorCause = ex.getCause();
+        if (errorCause != null) {
+            String errorMessage = errorCause.getMessage();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
+
+    }
 }
