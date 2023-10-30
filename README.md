@@ -15,7 +15,7 @@ A documentação da API é essencial para entender como interagir com os serviç
 
 - **Postman Collection**: A coleção do Postman é uma maneira fácil de importar e testar chamadas de API em sua ferramenta Postman local.
 
-  [Coleção Postman](https://seu-repositorio-github/caminho-para-a-colecao/LabMedical.postman_collection.json)
+  [Coleção Postman]([https://seu-repositorio-github/caminho-para-a-colecao/LabMedical.postman_collection.json](https://github.com/FullStack-Itacorubi/M3P-BackEnd-Squad2/blob/main/LabMedical.postman_collection.json))
 
 ## Tecnologias Utilizadas
 
