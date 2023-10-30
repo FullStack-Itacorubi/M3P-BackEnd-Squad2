@@ -26,11 +26,11 @@ A documentação da API é essencial para entender como interagir com os serviç
 - PostgreSQL
  
  
-  <img height="50" src="images/spring-svgrepo-com.svg" width="50"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="images/pngfind.com-mysql-logo-transparent-png-744402.png"  height="70"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img height="35" src="images/Apache_Maven_logo.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img height="60" src="images/postman-icon-svgrepo-com.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img height="60" src="images/Postgresql_elephant.svg"/>
+  <img height="50" src="src/images/spring-svgrepo-com.svg" width="50"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="src/images/pngfind.com-mysql-logo-transparent-png-744402.png"  height="70"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img height="35" src="src/images/Apache_Maven_logo.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img height="60" src="src/images/postman-icon-svgrepo-com.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img height="60" src="src/images/Postgresql_elephant.svg"/>
 
 ## Uso da API
 
